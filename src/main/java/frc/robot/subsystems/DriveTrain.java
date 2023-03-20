@@ -16,7 +16,8 @@ public class DriveTrain extends SubsystemBase {
     public final CANSparkMax rightCanSparkMax = new CANSparkMax(CANIDs.MOTOR_RIGHT0_ID, MotorType.kBrushless);
     public final CANSparkMax rightFollowCanSparkMax = new CANSparkMax(CANIDs.MOTOR_RIGHT1_ID, MotorType.kBrushless);
 
-    public final SparkMaxPIDController sparkMaxPIDController = leftCanSparkMax.getPIDController();
+    public final SparkMaxPIDController leftPID = leftCanSparkMax.getPIDController();
+    public final SparkMaxPIDController rightPID = rightCanSparkMax.getPIDController();
 
     public final AHRS gyro = new AHRS();
 

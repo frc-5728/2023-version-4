@@ -11,6 +11,8 @@ public class TankDrive extends CommandBase {
 
     public TankDrive(DriveTrain driveTrain) {
         this.driveTrain = driveTrain;
+
+        addRequirements(driveTrain);
     }
 
     @Override
