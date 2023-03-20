@@ -17,4 +17,12 @@ public class Elevator extends SubsystemBase {
 
     public Elevator() {
     }
+
+    @Override
+    public void periodic() {
+        // This method will be called once per scheduler run
+        if (upper.get() || lower.get()) {
+            motor.set(0);
+        }
+    }
 }
