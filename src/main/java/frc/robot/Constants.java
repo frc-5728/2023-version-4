@@ -5,7 +5,7 @@ public final class Constants {
         public static final int xboxControllerPort = 1;
         public static final int joystickPort = 0;
 
-        public static final double TURNING_RATE = 0.15;
+        public static final double TURNING_RATE = 0.2;
         public static final double SLOW_MODE_RATE = 0.1;
     }
 
@@ -25,5 +25,9 @@ public final class Constants {
 
         public static final int ARM = 7;
         public static final int DRAWER = 8;
+    }
+
+    public static class OtherConstants {
+        public static final int SOLENOID_CHANNEL = 15;
     }
 }
