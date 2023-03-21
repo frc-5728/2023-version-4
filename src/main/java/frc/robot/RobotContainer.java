@@ -30,6 +30,7 @@ public class RobotContainer {
   private void configureBindings() {
     // bindings for drive train stuff (like ones using xbox controller)
     xboxController.start().onTrue(new TankDrive(driveTrain));
+    xboxController.x().onTrue(Commands.print("X button pressed"));
 
     configureBindingsJoystick();
   }

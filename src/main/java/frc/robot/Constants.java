@@ -28,7 +28,26 @@ public final class Constants {
         public static final int DRAWER = 8;
     }
 
+    public static class LimitSwitches {
+        public static final int ELEVATOR_TOP_LIMIT = 0;
+        public static final int ELEVATOR_BOTTOM_LIMIT = 1;
+        public static final int DRAWER_TOP_LIMIT = 4;
+        public static final int DRAWER_BOTTOM_LIMIT = 5;
+        public static final int ARM_TOP_LIMIT = 2;
+        public static final int ARM_BOTTOM_LIMIT = 3;
+    }
+
     public static class OtherConstants {
         public static final int SOLENOID_CHANNEL = 15;
+    }
+
+    public static class Store {
+        // this is a special one as it controls the application state management
+        public static double ARM_ENCODER_START_POSITION = 0;
+        public static double ELEVATOR_ENCODER_START_POSITION = 0;
+        public static double DRAWER_ENCODER_START_POSITION = 0;
+        public static double DRAWER_ENCODER_END_POSITION = 0;
+        public static double ELEVATOR_ENCODER_END_POSITION = 0;
+        public static double ARM_ENCODER_END_POSITION = 0;
     }
 }

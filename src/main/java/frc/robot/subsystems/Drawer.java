@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -10,12 +11,17 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.CANIDs;
 
 public class Drawer extends SubsystemBase {
-    TalonSRX motor = new TalonSRX(CANIDs.DRAWER);
+    private final TalonSRX motor = new TalonSRX(CANIDs.DRAWER);
 
-    private final DigitalInput outer = new DigitalInput(0);
-    private final DigitalInput inner = new DigitalInput(1);
+    public final DigitalInput outer = new DigitalInput(0);
+    public final DigitalInput inner = new DigitalInput(1);
 
     private final ShuffleboardTab tab = Shuffleboard.getTab("JoySticks");
+    private final GenericEntry positionEntry = tab.add("Drawer Position", motor.getSelectedSensorPosition()).getEntry();
+    private final GenericEntry kPEntry = tab.add("Drawer kP", 0.0).getEntry();
+    private final GenericEntry kIEntry = tab.add("Drawer kI", 0.0).getEntry();
+    private final GenericEntry kDEntry = tab.add("Drawer kD", 0.0).getEntry();
+    private final GenericEntry kFEntry = tab.add("Drawer kF", 0.0).getEntry();
 
     public Drawer() {
         motor.configFactoryDefault();
@@ -24,12 +30,12 @@ public class Drawer extends SubsystemBase {
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
-        if (getOuter() || getInner()) {
-            motor.set(TalonSRXControlMode.PercentOutput, 0);
-        }
+        positionEntry.setDouble(motor.getSelectedSensorPosition());
     }
 
     public void set(double speed) {
+        if (getOuter() || getInner())
+            return;
         motor.set(TalonSRXControlMode.PercentOutput, speed);
     }
 
