@@ -42,6 +42,7 @@ public final class Constants {
     public static class OtherConstants {
         public static final int SOLENOID_CHANNEL = 15;
         public static final int NUMBER_OF_POSITIONS_ELEVATOR = 5;
+        public static final int NUMBER_OF_POSITIONS_DRAWER = 3;
     }
 
     public static class Store {

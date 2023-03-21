@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.CANIDs;
 import frc.robot.Constants.LimitSwitches;
+import frc.robot.Constants.OtherConstants;
 import frc.robot.Constants.Store;
 
 public class Drawer extends SubsystemBase {
@@ -26,17 +27,34 @@ public class Drawer extends SubsystemBase {
     private final GenericEntry kFEntry = tab.add("Drawer kF", 0.0).getEntry();
 
     private int position = 0;
+    private double[] positions = new double[OtherConstants.NUMBER_OF_POSITIONS_DRAWER];
 
     public Drawer() {
+        computePositions();
         motor.configFactoryDefault();
     }
 
+    private void computePositions() {
+        double range = Store.ELEVATOR_ENCODER_END_POSITION - Store.ELEVATOR_ENCODER_START_POSITION;
+        double step = range / (OtherConstants.NUMBER_OF_POSITIONS_DRAWER);
+
+        for (int i = 0; i < OtherConstants.NUMBER_OF_POSITIONS_DRAWER; i++) {
+            positions[i] = Store.ELEVATOR_ENCODER_START_POSITION + (i * step);
+        }
+    }
+
     public void moveUp() {
-        setPosition(Store.DRAWER_ENCODER_END_POSITION);
+        position++;
+        if (position > OtherConstants.NUMBER_OF_POSITIONS_DRAWER)
+            position = OtherConstants.NUMBER_OF_POSITIONS_DRAWER;
+        setPosition(positions[position]);
     }
 
     public void moveDown() {
-        setPosition(Store.DRAWER_ENCODER_START_POSITION);
+        position--;
+        if (position < 0)
+            position = 0;
+        setPosition(positions[position]);
     }
 
     public void setPosition(double position) {
@@ -53,10 +71,14 @@ public class Drawer extends SubsystemBase {
         motor.config_kD(0, kDEntry.getDouble(0.0));
         motor.config_kF(0, kFEntry.getDouble(0.0));
 
-        if (getOuter())
+        if (getOuter()) {
             Store.DRAWER_ENCODER_END_POSITION = motor.getSelectedSensorPosition();
-        if (getInner())
+            computePositions();
+        }
+        if (getInner()) {
             Store.DRAWER_ENCODER_START_POSITION = motor.getSelectedSensorPosition();
+            computePositions();
+        }
     }
 
     public void set(double speed) {
