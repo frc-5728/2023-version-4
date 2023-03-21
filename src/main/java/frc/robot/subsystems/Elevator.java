@@ -3,6 +3,7 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkMaxAbsoluteEncoder;
 import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
 
@@ -21,6 +22,18 @@ public class Elevator extends SubsystemBase {
     public final DigitalInput lower = new DigitalInput(LimitSwitches.ELEVATOR_BOTTOM_LIMIT);
 
     public Elevator() {
+    }
+
+    public void moveUp() {
+        setPosition(Store.ELEVATOR_ENCODER_END_POSITION);
+    }
+
+    public void moveDown() {
+        setPosition(Store.ELEVATOR_ENCODER_START_POSITION);
+    }
+
+    public void setPosition(double position) {
+        pid.setReference(position, ControlType.kPosition);
     }
 
     public void set(double speed) {

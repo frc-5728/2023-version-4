@@ -28,6 +28,18 @@ public class Drawer extends SubsystemBase {
         motor.configFactoryDefault();
     }
 
+    public void moveUp() {
+        setPosition(Store.DRAWER_ENCODER_END_POSITION);
+    }
+
+    public void moveDown() {
+        setPosition(Store.DRAWER_ENCODER_START_POSITION);
+    }
+
+    public void setPosition(double position) {
+        motor.set(TalonSRXControlMode.Position, position);
+    }
+
     @Override
     public void periodic() {
         // This method will be called once per scheduler run

@@ -11,10 +11,12 @@ public final class Constants {
 
     public static class JoystickIDs {
         public static final int JOYSTICK_TRIGGER_ID = 1;
-        public static final int ARM_UP_JOYSTICK = 6;
-        public static final int ARM_DOWN_JOYSTICK = 7;
-        public static final int ELEVATOR_UP_JOYSTICK = 3;
-        public static final int ELEVATOR_DOWN_JOYSTICK = 2;
+        public static final int ARM_UP_JOYSTICK_ID = 6;
+        public static final int ARM_DOWN_JOYSTICK_ID = 7;
+        public static final int ELEVATOR_UP_JOYSTICK_ID = 3;
+        public static final int ELEVATOR_DOWN_JOYSTICK_ID = 2;
+        public static final int DRAWER_UP_JOYSTICK_ID = 5;
+        public static final int DRAWER_DOWN_JOYSTICK_ID = 4;
     }
 
     public static class CANIDs {

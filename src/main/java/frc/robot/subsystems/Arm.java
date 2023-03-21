@@ -29,6 +29,14 @@ public class Arm extends SubsystemBase {
         motor.configFactoryDefault();
     }
 
+    public void moveUp() {
+        setPosition(Store.ARM_ENCODER_END_POSITION);
+    }
+
+    public void moveDown() {
+        setPosition(Store.ARM_ENCODER_START_POSITION);
+    }
+
     public void set(double speed) {
         if (outer.get() || inner.get())
             return;
