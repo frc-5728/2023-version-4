@@ -46,9 +46,14 @@ public class Arm extends SubsystemBase {
         // This method will be called once per scheduler run
         positionEntry.setDouble(motor.getSelectedSensorPosition());
 
+        motor.config_kP(0, kPEntry.getDouble(0.0));
+        motor.config_kI(0, kIEntry.getDouble(0.0));
+        motor.config_kD(0, kDEntry.getDouble(0.0));
+        motor.config_kF(0, kFEntry.getDouble(0.0));
+
         if (outer.get())
-            Store.ARM_ENCODER_END_POSITION = 100;
+            Store.ARM_ENCODER_END_POSITION = motor.getSelectedSensorPosition();
         if (inner.get())
-            Store.ARM_ENCODER_END_POSITION = 0;
+            Store.ARM_ENCODER_END_POSITION = motor.getSelectedSensorPosition();
     }
 }

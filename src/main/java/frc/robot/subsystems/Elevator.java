@@ -10,6 +10,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.CANIDs;
 import frc.robot.Constants.LimitSwitches;
+import frc.robot.Constants.Store;
 
 public class Elevator extends SubsystemBase {
     CANSparkMax motor = new CANSparkMax(CANIDs.ELEVATOR, MotorType.kBrushless);
@@ -31,8 +32,9 @@ public class Elevator extends SubsystemBase {
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
-        if (upper.get() || lower.get()) {
-            motor.set(0);
-        }
+        if (upper.get())
+            Store.ELEVATOR_ENCODER_END_POSITION = encoder.getPosition();
+        if (lower.get())
+            Store.ELEVATOR_ENCODER_START_POSITION = encoder.getPosition();
     }
 }

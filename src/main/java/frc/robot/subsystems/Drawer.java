@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.CANIDs;
+import frc.robot.Constants.Store;
 
 public class Drawer extends SubsystemBase {
     private final TalonSRX motor = new TalonSRX(CANIDs.DRAWER);
@@ -31,6 +32,16 @@ public class Drawer extends SubsystemBase {
     public void periodic() {
         // This method will be called once per scheduler run
         positionEntry.setDouble(motor.getSelectedSensorPosition());
+
+        motor.config_kP(0, kPEntry.getDouble(0.0));
+        motor.config_kI(0, kIEntry.getDouble(0.0));
+        motor.config_kD(0, kDEntry.getDouble(0.0));
+        motor.config_kF(0, kFEntry.getDouble(0.0));
+
+        if (getOuter())
+            Store.DRAWER_ENCODER_END_POSITION = motor.getSelectedSensorPosition();
+        if (getInner())
+            Store.DRAWER_ENCODER_START_POSITION = motor.getSelectedSensorPosition();
     }
 
     public void set(double speed) {
