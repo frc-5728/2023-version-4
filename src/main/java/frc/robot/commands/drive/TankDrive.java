@@ -20,7 +20,7 @@ public class TankDrive extends CommandBase {
         double triggerVal = controller.getRightTriggerAxis() - controller.getLeftTriggerAxis();
 
         // then for the left and right turns during teleop tank drive
-        // that we will use the left axis (i think its 0 as id)
+        // that we will use the left axis
         // http://www.team358.org/files/programming/ControlSystem2015-2019/images/Logitech-F310_ControlMapping.pdf
         double stick = controller.getLeftX() * OperatorConstants.TURNING_RATE;
 
@@ -32,5 +32,10 @@ public class TankDrive extends CommandBase {
 
         driveTrain.setLeftSpeed(triggerVal + stick - (slowTrigger));
         driveTrain.setRightSpeed(triggerVal - stick - (slowTrigger));
+    }
+
+    @Override
+    public boolean isFinished() {
+        return false;
     }
 }

@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.JoystickIDs;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.commands.arm.HatchCommand;
 import frc.robot.commands.drive.TankDrive;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drawer;
@@ -25,9 +26,9 @@ public class RobotContainer {
 
   private final DriveTrain driveTrain = new DriveTrain();
   private final Hatch hatch = new Hatch();
-  private final Arm arm = new Arm();
-  private final Drawer drawer = new Drawer();
-  private final Elevator elevator = new Elevator();
+  // private final Arm arm = new Arm();
+  // private final Drawer drawer = new Drawer();
+  private final Elevator elevator = new Elevator(joystick);
 
   public RobotContainer() {
     configureBindings();
@@ -50,13 +51,13 @@ public class RobotContainer {
     JoystickButton drawerUpButton = new JoystickButton(joystick, JoystickIDs.DRAWER_UP_JOYSTICK_ID);
     JoystickButton drawerDownButton = new JoystickButton(joystick, JoystickIDs.DRAWER_DOWN_JOYSTICK_ID);
 
-    triggerButton.onTrue(Commands.run(() -> hatch.toggle(), hatch));
-    armUpButton.onTrue(Commands.run(() -> arm.moveUp(), arm));
-    armDownButton.onTrue(Commands.run(() -> arm.moveDown(), arm));
+    triggerButton.whileTrue(new HatchCommand(hatch));
+    // armUpButton.onTrue(Commands.run(() -> arm.moveUp(), arm));
+    // armDownButton.onTrue(Commands.run(() -> arm.moveDown(), arm));
     elevatorUpButton.onTrue(Commands.run(() -> elevator.moveUp(), elevator));
     elevatorDownButton.onTrue(Commands.run(() -> elevator.moveDown(), elevator));
-    drawerUpButton.onTrue(Commands.run(() -> drawer.moveUp(), drawer));
-    drawerDownButton.onTrue(Commands.run(() -> drawer.moveDown(), drawer));
+    // drawerUpButton.onTrue(Commands.run(() -> drawer.moveUp(), drawer));
+    // drawerDownButton.onTrue(Commands.run(() -> drawer.moveDown(), drawer));
   }
 
   public Command getAutonomousCommand() {
