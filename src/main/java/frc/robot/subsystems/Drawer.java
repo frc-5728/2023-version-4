@@ -9,20 +9,23 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.CANIDs;
+import frc.robot.Constants.LimitSwitches;
 import frc.robot.Constants.Store;
 
 public class Drawer extends SubsystemBase {
     private final TalonSRX motor = new TalonSRX(CANIDs.DRAWER);
 
-    public final DigitalInput outer = new DigitalInput(0);
-    public final DigitalInput inner = new DigitalInput(1);
+    public final DigitalInput outer = new DigitalInput(LimitSwitches.DRAWER_TOP_LIMIT);
+    public final DigitalInput inner = new DigitalInput(LimitSwitches.DRAWER_BOTTOM_LIMIT);
 
     private final ShuffleboardTab tab = Shuffleboard.getTab("JoySticks");
-    private final GenericEntry positionEntry = tab.add("Drawer Position", motor.getSelectedSensorPosition()).getEntry();
+    private final GenericEntry positionEntry = tab.add("Drawer Encoder", motor.getSelectedSensorPosition()).getEntry();
     private final GenericEntry kPEntry = tab.add("Drawer kP", 0.0).getEntry();
     private final GenericEntry kIEntry = tab.add("Drawer kI", 0.0).getEntry();
     private final GenericEntry kDEntry = tab.add("Drawer kD", 0.0).getEntry();
     private final GenericEntry kFEntry = tab.add("Drawer kF", 0.0).getEntry();
+
+    private int position = 0;
 
     public Drawer() {
         motor.configFactoryDefault();

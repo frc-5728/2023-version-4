@@ -9,13 +9,14 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.CANIDs;
+import frc.robot.Constants.LimitSwitches;
 import frc.robot.Constants.Store;
 
 public class Arm extends SubsystemBase {
     TalonSRX motor = new TalonSRX(CANIDs.ARM);
 
-    public final DigitalInput outer = new DigitalInput(0);
-    public final DigitalInput inner = new DigitalInput(1);
+    public final DigitalInput outer = new DigitalInput(LimitSwitches.ARM_TOP_LIMIT);
+    public final DigitalInput inner = new DigitalInput(LimitSwitches.ARM_BOTTOM_LIMIT);
 
     private final ShuffleboardTab tab = Shuffleboard.getTab("JoySticks");
     private final GenericEntry positionEntry = tab.add("Drawer Position", motor.getSelectedSensorPosition()).getEntry();

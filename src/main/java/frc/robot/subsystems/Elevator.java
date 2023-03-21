@@ -95,6 +95,7 @@ public class Elevator extends SubsystemBase {
             computePositions();
         }
 
+        positionEntry.setDouble(encoder.getPosition());
         // setPosition(positionEntry.getDouble(Store.ELEVATOR_ENCODER_START_POSITION));
     }
 }
