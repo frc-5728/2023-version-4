@@ -9,6 +9,10 @@ public class Hatch extends SubsystemBase {
     Solenoid solenoid = new Solenoid(PneumaticsModuleType.REVPH, OtherConstants.SOLENOID_CHANNEL);
     private boolean isOpen;
 
+    public void set(boolean isOpen) {
+        solenoid.set(isOpen);
+    }
+
     public void toggle() {
         if (isOpen) {
             isOpen = false;
