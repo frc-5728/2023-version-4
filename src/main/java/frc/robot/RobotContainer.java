@@ -14,6 +14,7 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.arm.HatchCommand;
 import frc.robot.commands.arm.MoveClaw;
 import frc.robot.commands.arm.MoveDrawer;
+import frc.robot.commands.drive.Move;
 import frc.robot.commands.drive.MoveToDistance;
 import frc.robot.commands.drive.TankDrive;
 import frc.robot.subsystems.Arm;
@@ -40,11 +41,12 @@ public class RobotContainer {
   private void configureBindings() {
     // bindings for drive train stuff (like ones using xbox controller)
     xboxController.start().onTrue(new TankDrive(driveTrain));
-    xboxController.x().onTrue(Commands.run(() -> {
-      driveTrain.resetEncoders();
-    }, driveTrain));
+    // xboxController.x().onTrue(Commands.run(() -> {
+    //   driveTrain.resetEncoders();
+    // }, driveTrain));
 
     xboxController.povUp().onTrue(new MoveToDistance(driveTrain, 2));
+    xboxController.povDown().onTrue(new Move(driveTrain, -5));
 
     configureBindingsJoystick();
   }

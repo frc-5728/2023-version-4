@@ -84,9 +84,11 @@ public class Elevator extends SubsystemBase {
     }
 
     public void set(double speed) {
-        if (!upper.get() || !lower.get()){
-            motor.set(0);
-            return;
+        if (!upper.get() && speed > 0) {
+            speed = 0;
+        }
+        if (lower.get() && speed < 0) {
+            speed = 0;
         }
         motor.set(speed);
     }
@@ -97,12 +99,10 @@ public class Elevator extends SubsystemBase {
         if (!upper.get()) {
             Store.ELEVATOR_ENCODER_END_POSITION = encoder.getPosition();
             computePositions();
-            motor.set(-1);
         }
         if (!lower.get()) {
             Store.ELEVATOR_ENCODER_START_POSITION = encoder.getPosition();
             computePositions();
-            motor.set(1);
         }
 
         // if the direction of the y axis and the encoder decreasing is not matched

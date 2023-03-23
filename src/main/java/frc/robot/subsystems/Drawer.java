@@ -17,7 +17,7 @@ import frc.robot.Constants.Store;
 public class Drawer extends SubsystemBase {
     private final Joystick joystick;
     
-    private final TalonSRX motor = new TalonSRX(CANIDs.DRAWER);
+    public final TalonSRX motor = new TalonSRX(CANIDs.DRAWER);
 
     private final ShuffleboardTab tab = Shuffleboard.getTab("JoySticks");
     private final GenericEntry positionEntry = tab.add("Drawer Encoder", motor.getSelectedSensorPosition()).getEntry();

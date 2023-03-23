@@ -7,10 +7,12 @@ import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.networktables.GenericEntry;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.CANIDs;
+import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.drive.TankDrive;
 
 public class DriveTrain extends SubsystemBase {
@@ -33,11 +35,16 @@ public class DriveTrain extends SubsystemBase {
     private final GenericEntry leftPositionEntry = tab.add("left position", 0).getEntry();
     private final GenericEntry rightPositionEntry = tab.add("right position", 0).getEntry();
 
+    private final XboxController xboxController = new XboxController(OperatorConstants.xboxControllerPort);
+
     public DriveTrain() {
         rightCanSparkMax.setInverted(true);
         
         leftFollowCanSparkMax.follow(leftCanSparkMax);
         rightFollowCanSparkMax.follow(rightCanSparkMax);
+
+        leftEncoder.setPositionConversionFactor(4/68.5 * (4.8/5));
+        rightEncoder.setPositionConversionFactor(4/68.5 * ((4.8/5)));
 
         // leftCanSparkMax.burnFlash();
         // leftFollowCanSparkMax.burnFlash();
@@ -69,5 +76,9 @@ public class DriveTrain extends SubsystemBase {
     public void periodic() {
         leftPositionEntry.setDouble(this.leftEncoder.getPosition());
         rightPositionEntry.setDouble(this.rightEncoder.getPosition());
+
+        if (xboxController.getXButton()) {
+            resetEncoders();
+        }
     }
 }

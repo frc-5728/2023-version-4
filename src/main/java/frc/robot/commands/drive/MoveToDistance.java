@@ -16,7 +16,7 @@ public class MoveToDistance extends CommandBase {
     private final double kI = 0;
     private final double kD = 0;
     private final double kFF = 0;
-    
+
     private final ShuffleboardTab tab = Shuffleboard.getTab("Drive");
     private final GenericEntry pEntry = tab.add(getName() + " P", kP).getEntry();
     private final GenericEntry iEntry = tab.add(getName() + " I", kI).getEntry();
@@ -48,5 +48,10 @@ public class MoveToDistance extends CommandBase {
         driveTrain.rightPID.setFF(ffEntry.getDouble(kFF));
 
         driveTrain.rightPID.setReference(distance, ControlType.kPosition);
+    }
+
+    @Override
+    public boolean isFinished() {
+        return driveTrain.leftEncoder.getPosition() == distance && driveTrain.rightEncoder.getPosition() == distance;
     }
 }
