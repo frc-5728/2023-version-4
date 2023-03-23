@@ -5,6 +5,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -15,8 +16,7 @@ import frc.robot.Constants.Store;
 public class Arm extends SubsystemBase {
     TalonSRX motor = new TalonSRX(CANIDs.ARM);
 
-    public final DigitalInput outer = new DigitalInput(LimitSwitches.ARM_TOP_LIMIT);
-    public final DigitalInput inner = new DigitalInput(LimitSwitches.ARM_BOTTOM_LIMIT);
+    private final DigitalInput limitSwitch = new DigitalInput(LimitSwitches.ARM_DIO);
 
     private final ShuffleboardTab tab = Shuffleboard.getTab("JoySticks");
     private final GenericEntry positionEntry = tab.add("Drawer Position", motor.getSelectedSensorPosition()).getEntry();
@@ -26,27 +26,19 @@ public class Arm extends SubsystemBase {
     private final GenericEntry kDEntry = tab.add("Arm kD", 0.0).getEntry();
     private final GenericEntry kFEntry = tab.add("Arm kF", 0.0).getEntry();
 
-    public Arm() {
+    private final Joystick joystick;
+
+    public Arm(Joystick joystick) {
+        this.joystick = joystick;
+
         motor.configFactoryDefault();
     }
 
-    public void moveUp() {
-        setPosition(Store.ARM_ENCODER_END_POSITION);
-    }
-
-    public void moveDown() {
-        setPosition(Store.ARM_ENCODER_START_POSITION);
-    }
-
-    public void set(double speed) {
-        if (outer.get() || inner.get())
-            return;
-        motor.set(TalonSRXControlMode.PercentOutput, speed);
+    public void setSpeed(double speed) {
+        motor.set(TalonSRXControlMode.PercentOutput, -speed);
     }
 
     public void setPosition(double position) {
-        if (outer.get() || inner.get())
-            return;
         motor.set(TalonSRXControlMode.Position, position);
     }
 
@@ -55,14 +47,13 @@ public class Arm extends SubsystemBase {
         // This method will be called once per scheduler run
         positionEntry.setDouble(motor.getSelectedSensorPosition());
 
+        if (limitSwitch.get()) {
+            setSpeed(1);
+        }
+
         motor.config_kP(0, kPEntry.getDouble(0.0));
         motor.config_kI(0, kIEntry.getDouble(0.0));
         motor.config_kD(0, kDEntry.getDouble(0.0));
         motor.config_kF(0, kFEntry.getDouble(0.0));
-
-        if (outer.get())
-            Store.ARM_ENCODER_END_POSITION = motor.getSelectedSensorPosition();
-        if (inner.get())
-            Store.ARM_ENCODER_END_POSITION = motor.getSelectedSensorPosition();
     }
 }

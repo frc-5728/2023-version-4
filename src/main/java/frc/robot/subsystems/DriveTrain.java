@@ -32,8 +32,6 @@ public class DriveTrain extends SubsystemBase {
         // rightCanSparkMax.burnFlash();
         // rightFollowCanSparkMax.burnFlash();
 
-        setSpeed(0.05);
-
         setDefaultCommand(new TankDrive(this));
     }
 

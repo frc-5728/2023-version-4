@@ -35,8 +35,7 @@ public final class Constants {
         public static final int ELEVATOR_BOTTOM_LIMIT = 1;
         public static final int DRAWER_TOP_LIMIT = 4;
         public static final int DRAWER_BOTTOM_LIMIT = 5;
-        public static final int ARM_TOP_LIMIT = 2;
-        public static final int ARM_BOTTOM_LIMIT = 3;
+        public static final int ARM_DIO = 2;
     }
 
     public static class OtherConstants {
@@ -51,8 +50,9 @@ public final class Constants {
         public static double ELEVATOR_ENCODER_END_POSITION = -720;
         
         public static double ARM_ENCODER_START_POSITION = 0;
-        public static double DRAWER_ENCODER_START_POSITION = 0;
-        public static double DRAWER_ENCODER_END_POSITION = 0;
         public static double ARM_ENCODER_END_POSITION = 0;
+
+        public static double DRAWER_ENCODER_START_POSITION = -95;
+        public static double DRAWER_ENCODER_END_POSITION = 48;
     }
 }

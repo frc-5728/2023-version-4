@@ -5,25 +5,25 @@
 package frc.robot.commands.arm;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Drawer;
+import frc.robot.subsystems.Arm;
 
-public class MoveDrawer extends CommandBase {
-  private final Drawer drawer;
+public class MoveClaw extends CommandBase {
+  private final Arm arm;
   private final double speed;
   
-  /** Creates a new MoveDrawer. */
-  public MoveDrawer(Drawer drawer, double speed) {
-    this.drawer = drawer;
+  /** Creates a new MoveClaw. */
+  public MoveClaw(Arm arm, double speed) {
+    this.arm = arm;
     this.speed = speed;
     
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(drawer);
+    addRequirements(arm);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    drawer.setSpeed(speed);
+    arm.setSpeed(speed);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -33,7 +33,7 @@ public class MoveDrawer extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    drawer.setSpeed(0);
+    arm.setSpeed(0);
   }
 
   // Returns true when the command should end.

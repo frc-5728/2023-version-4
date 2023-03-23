@@ -12,6 +12,8 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.JoystickIDs;
 import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.arm.HatchCommand;
+import frc.robot.commands.arm.MoveClaw;
+import frc.robot.commands.arm.MoveDrawer;
 import frc.robot.commands.drive.TankDrive;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Drawer;
@@ -26,8 +28,8 @@ public class RobotContainer {
 
   private final DriveTrain driveTrain = new DriveTrain();
   private final Hatch hatch = new Hatch();
-  // private final Arm arm = new Arm();
-  // private final Drawer drawer = new Drawer();
+  private final Arm arm = new Arm(joystick);
+  private final Drawer drawer = new Drawer(joystick);
   private final Elevator elevator = new Elevator(joystick);
 
   public RobotContainer() {
@@ -51,13 +53,16 @@ public class RobotContainer {
     JoystickButton drawerUpButton = new JoystickButton(joystick, JoystickIDs.DRAWER_UP_JOYSTICK_ID);
     JoystickButton drawerDownButton = new JoystickButton(joystick, JoystickIDs.DRAWER_DOWN_JOYSTICK_ID);
 
+    JoystickButton setpointModeToggleButton = new JoystickButton(joystick, 8);
+
     triggerButton.whileTrue(new HatchCommand(hatch));
-    // armUpButton.onTrue(Commands.run(() -> arm.moveUp(), arm));
-    // armDownButton.onTrue(Commands.run(() -> arm.moveDown(), arm));
+    armUpButton.whileTrue(new MoveClaw(arm, 0.6));
+    armDownButton.whileTrue(new MoveClaw(arm, -0.6));
     elevatorUpButton.onTrue(Commands.run(() -> elevator.moveUp(), elevator));
     elevatorDownButton.onTrue(Commands.run(() -> elevator.moveDown(), elevator));
-    // drawerUpButton.onTrue(Commands.run(() -> drawer.moveUp(), drawer));
-    // drawerDownButton.onTrue(Commands.run(() -> drawer.moveDown(), drawer));
+    drawerUpButton.whileTrue(new MoveDrawer(drawer, 0.5));
+    drawerDownButton.whileTrue(new MoveDrawer(drawer, -0.5));
+    setpointModeToggleButton.onTrue(Commands.run(() -> {drawer.setSetpointModeOn(!drawer.setpointModeOn);}, drawer));
   }
 
   public Command getAutonomousCommand() {
