@@ -23,7 +23,7 @@ public class GoToCoopertition extends SequentialCommandGroup {
 
             addCommands(
                 
-                new TurnMove(atSubsystem, driveTrain, this.displacement, this.idCoop)
+                // new TurnMove(atSubsystem, driveTrain, this.displacement, this.idCoop)
 
             );
            

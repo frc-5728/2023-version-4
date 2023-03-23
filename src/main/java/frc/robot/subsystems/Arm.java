@@ -21,10 +21,10 @@ public class Arm extends SubsystemBase {
     private final ShuffleboardTab tab = Shuffleboard.getTab("JoySticks");
     private final GenericEntry positionEntry = tab.add("Drawer Position", motor.getSelectedSensorPosition()).getEntry();
 
-    private final GenericEntry kPEntry = tab.add("Arm kP", 0.0).getEntry();
-    private final GenericEntry kIEntry = tab.add("Arm kI", 0.0).getEntry();
-    private final GenericEntry kDEntry = tab.add("Arm kD", 0.0).getEntry();
-    private final GenericEntry kFEntry = tab.add("Arm kF", 0.0).getEntry();
+    // private final GenericEntry kPEntry = tab.add("Arm kP", 0.0).getEntry();
+    // private final GenericEntry kIEntry = tab.add("Arm kI", 0.0).getEntry();
+    // private final GenericEntry kDEntry = tab.add("Arm kD", 0.0).getEntry();
+    // private final GenericEntry kFEntry = tab.add("Arm kF", 0.0).getEntry();
 
     private final Joystick joystick;
 
@@ -35,6 +35,8 @@ public class Arm extends SubsystemBase {
     }
 
     public void setSpeed(double speed) {
+        if (!limitSwitch.get() && speed < 0)
+            return;
         motor.set(TalonSRXControlMode.PercentOutput, -speed);
     }
 
@@ -47,13 +49,9 @@ public class Arm extends SubsystemBase {
         // This method will be called once per scheduler run
         positionEntry.setDouble(motor.getSelectedSensorPosition());
 
-        if (limitSwitch.get()) {
-            setSpeed(1);
-        }
-
-        motor.config_kP(0, kPEntry.getDouble(0.0));
-        motor.config_kI(0, kIEntry.getDouble(0.0));
-        motor.config_kD(0, kDEntry.getDouble(0.0));
-        motor.config_kF(0, kFEntry.getDouble(0.0));
+        // motor.config_kP(0, kPEntry.getDouble(0.0));
+        // motor.config_kI(0, kIEntry.getDouble(0.0));
+        // motor.config_kD(0, kDEntry.getDouble(0.0));
+        // motor.config_kF(0, kFEntry.getDouble(0.0));
     }
 }
