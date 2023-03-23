@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.Hatch;
 import frc.robot.subsystems.Elevator;
 import frc.robot.commands.VisionUtil.MoveToLowerCone;
+import frc.robot.subsystems.*;
 
 public class DropConeLower extends SequentialCommandGroup {
     
@@ -15,13 +16,17 @@ public class DropConeLower extends SequentialCommandGroup {
     private final DriveTrain driveTrain;
     private final Elevator elevator;
     private final Hatch hatch;
+    private final Arm arm;
+    private final Drawer drawer;
 
-    public DropConeLower(ReflectiveTapeSubsystem rtSubsystem, DriveTrain driveTrain, Hatch hatch, Elevator elevator) {
+    public DropConeLower(ReflectiveTapeSubsystem rtSubsystem, DriveTrain driveTrain, Hatch hatch, Elevator elevator, Arm arm, Drawer drawer) {
 
         this.rtSubsystem = rtSubsystem;
         this.driveTrain = driveTrain;
         this.hatch = hatch;
         this.elevator = elevator;
+        this.arm = arm;
+        this.drawer = drawer;
 
         if (rtSubsystem.hasTarget) {
 
@@ -29,7 +34,7 @@ public class DropConeLower extends SequentialCommandGroup {
 
             addCommands(
                 
-                new MoveToLowerCone(rtSubsystem, driveTrain, hatch, elevator),
+                new MoveToLowerCone(rtSubsystem, driveTrain, hatch, elevator, drawer),
                 Commands.run(() -> hatch.set(true), hatch)
 
             );
@@ -46,6 +51,7 @@ public class DropConeLower extends SequentialCommandGroup {
         addRequirements(driveTrain);
         addRequirements(hatch);
         addRequirements(elevator);
+        addRequirements(drawer);
 
     }
 
