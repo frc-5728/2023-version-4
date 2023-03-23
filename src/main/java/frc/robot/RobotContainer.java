@@ -51,6 +51,8 @@ public class RobotContainer {
     SmartDashboard.putData("Balance", new AutoBalance(driveTrain));
     SmartDashboard.putData("Go 2 coopertition", new GoToCoopertition(m_atSubsystem, driveTrain));
     SmartDashboard.putData("Go 2 Home", new GoToHome(m_atSubsystem, driveTrain));
+    SmartDashboard.putData("AutoPeriod", new AutoPeriod(driveTrain, hatch, elevator));
+
   }
 
   private void configureBindings() {
