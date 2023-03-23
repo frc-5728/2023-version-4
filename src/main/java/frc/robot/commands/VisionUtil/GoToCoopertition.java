@@ -33,6 +33,7 @@ public class GoToCoopertition extends SequentialCommandGroup {
         }
         
         addRequirements(atSubsystem);
+        addRequirements(driveTrain);
 
     }
 

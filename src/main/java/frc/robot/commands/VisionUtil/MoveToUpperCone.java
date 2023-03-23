@@ -47,6 +47,9 @@ public class MoveToUpperCone extends ParallelCommandGroup {
         }
         
         addRequirements(rtSubsystem);
+        addRequirements(elevator);
+        addRequirements(hatch);
+        addRequirements(driveTrain);
 
     }
 

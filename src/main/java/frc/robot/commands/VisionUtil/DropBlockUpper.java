@@ -43,6 +43,9 @@ public class DropBlockUpper extends SequentialCommandGroup {
         }
         
         addRequirements(atSubsystem);
+        addRequirements(driveTrain);
+        addRequirements(hatch);
+        addRequirements(elevator);
 
     }
 

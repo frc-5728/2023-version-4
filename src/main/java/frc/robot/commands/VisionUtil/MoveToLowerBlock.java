@@ -48,6 +48,9 @@ public class MoveToLowerBlock extends ParallelCommandGroup {
         }
         
         addRequirements(atSubsystem);
+        addRequirements(elevator);
+        addRequirements(hatch);
+        addRequirements(driveTrain);
 
     }
 

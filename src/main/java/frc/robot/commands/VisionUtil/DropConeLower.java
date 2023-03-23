@@ -43,6 +43,9 @@ public class DropConeLower extends SequentialCommandGroup {
         }
         
         addRequirements(rtSubsystem);
+        addRequirements(driveTrain);
+        addRequirements(hatch);
+        addRequirements(elevator);
 
     }
 

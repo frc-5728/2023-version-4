@@ -48,6 +48,9 @@ public class MoveToUpperBlock extends ParallelCommandGroup {
         }
         
         addRequirements(atSubsystem);
+        addRequirements(elevator);
+        addRequirements(hatch);
+        addRequirements(driveTrain);
 
     }
 

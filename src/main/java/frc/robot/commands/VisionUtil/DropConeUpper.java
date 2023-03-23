@@ -43,7 +43,10 @@ public class DropConeUpper extends SequentialCommandGroup {
         }
         
         addRequirements(rtSubsystem);
-
+        addRequirements(driveTrain);
+        addRequirements(hatch);
+        addRequirements(elevator);
+        
     }
 
 }

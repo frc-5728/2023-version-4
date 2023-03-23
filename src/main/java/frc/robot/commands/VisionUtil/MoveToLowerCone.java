@@ -47,6 +47,9 @@ public class MoveToLowerCone extends ParallelCommandGroup {
         }
         
         addRequirements(rtSubsystem);
+        addRequirements(elevator);
+        addRequirements(hatch);
+        addRequirements(driveTrain);
 
     }
 
