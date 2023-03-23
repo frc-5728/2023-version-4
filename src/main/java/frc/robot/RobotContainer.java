@@ -20,6 +20,10 @@ import frc.robot.subsystems.Drawer;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Hatch;
+import frc.robot.commands.VisionUtil.*;
+import frc.robot.commands.autos.*;
+import edu.wpi.first.wpilibj.smartdashboard.*;
+import frc.robot.subsystems.Vision.*;
 
 public class RobotContainer {
   private final CommandXboxController xboxController = new CommandXboxController(
@@ -32,8 +36,16 @@ public class RobotContainer {
   private final Drawer drawer = new Drawer(joystick);
   private final Elevator elevator = new Elevator(joystick);
 
+  private final ReflectiveTapeSubsystem m_rtSubsystem = new ReflectiveTapeSubsystem();
+  private final AprilTagSubsystem m_atSubsystem = new AprilTagSubsystem();
+
   public RobotContainer() {
     configureBindings();
+
+    SmartDashboard.putData("Drop Cone", new DropCone(m_rtSubsystem, driveTrain));
+    SmartDashboard.putData("Balance", new AutoBalance(driveTrain));
+    SmartDashboard.putData("Move home", new GoToCoopertition(m_atSubsystem, driveTrain));
+    SmartDashboard.putData("Balance", new GoToHome(m_atSubsystem, driveTrain));
   }
 
   private void configureBindings() {
