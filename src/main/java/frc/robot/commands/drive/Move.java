@@ -42,6 +42,8 @@ public class Move extends PIDCommand {
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.
     addRequirements(driveTrain);
+
+    driveTrain.resetEncoders();
   }
 
   // Returns true when the command should end.

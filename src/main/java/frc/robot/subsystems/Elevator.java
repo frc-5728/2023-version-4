@@ -87,7 +87,7 @@ public class Elevator extends SubsystemBase {
         if (!upper.get() && speed > 0) {
             speed = 0;
         }
-        if (lower.get() && speed < 0) {
+        if (!lower.get() && speed < 0) {
             speed = 0;
         }
         motor.set(speed);

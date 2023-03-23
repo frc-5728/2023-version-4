@@ -35,8 +35,11 @@ public class Arm extends SubsystemBase {
     }
 
     public void setSpeed(double speed) {
-        if (!limitSwitch.get() && speed < 0)
+        if (!limitSwitch.get() && speed < 0) {
+            motor.set(TalonSRXControlMode.PercentOutput, 0);
             return;
+        }
+
         motor.set(TalonSRXControlMode.PercentOutput, -speed);
     }
 

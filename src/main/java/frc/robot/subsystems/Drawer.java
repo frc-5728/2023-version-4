@@ -13,6 +13,7 @@ import frc.robot.Constants.CANIDs;
 import frc.robot.Constants.LimitSwitches;
 import frc.robot.Constants.OtherConstants;
 import frc.robot.Constants.Store;
+import frc.robot.commands.arm.DrawerPosition;
 
 public class Drawer extends SubsystemBase {
     private final Joystick joystick;
@@ -42,6 +43,8 @@ public class Drawer extends SubsystemBase {
         
         computePositions();
         motor.configFactoryDefault();
+
+        // setDefaultCommand(new DrawerPosition(this, Store.DRAWER_ENCODER_START_POSITION));
     }
 
     public void setSpeed(double speed) {

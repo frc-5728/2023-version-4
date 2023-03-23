@@ -4,6 +4,7 @@
 
 package frc.robot.commands.arm;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.subsystems.Drawer;
@@ -24,9 +25,11 @@ public class DrawerPosition extends PIDCommand {
         // This uses the output
         output -> {
           // Use the output here
+          drawer.setSpeed(MathUtil.clamp(output, -0.8, 0.8));
         });
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.
+    addRequirements(drawer);
   }
 
   // Returns true when the command should end.
