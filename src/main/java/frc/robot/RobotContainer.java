@@ -22,6 +22,10 @@ import frc.robot.subsystems.Drawer;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Hatch;
+import frc.robot.commands.VisionUtil.*;
+import frc.robot.commands.autos.*;
+import edu.wpi.first.wpilibj.smartdashboard.*;
+import frc.robot.subsystems.Vision.*;
 
 public class RobotContainer {
   private final CommandXboxController xboxController = new CommandXboxController(
@@ -34,8 +38,19 @@ public class RobotContainer {
   private final Drawer drawer = new Drawer(joystick);
   private final Elevator elevator = new Elevator(joystick);
 
+  private final ReflectiveTapeSubsystem m_rtSubsystem = new ReflectiveTapeSubsystem();
+  private final AprilTagSubsystem m_atSubsystem = new AprilTagSubsystem();
+
   public RobotContainer() {
     configureBindings();
+
+    SmartDashboard.putData("Drop Cone Upper", new DropConeUpper(m_rtSubsystem, driveTrain, hatch, elevator));
+    SmartDashboard.putData("Drop Cone Lower", new DropConeLower(m_rtSubsystem, driveTrain, hatch, elevator));
+    SmartDashboard.putData("Drop Block Upper", new DropBlockUpper(m_atSubsystem, driveTrain, hatch, elevator));
+    SmartDashboard.putData("Drop Block Lower", new DropBlockLower(m_atSubsystem, driveTrain, hatch, elevator));
+    SmartDashboard.putData("Balance", new AutoBalance(driveTrain));
+    SmartDashboard.putData("Go 2 coopertition", new GoToCoopertition(m_atSubsystem, driveTrain));
+    SmartDashboard.putData("Go 2 Home", new GoToHome(m_atSubsystem, driveTrain));
   }
 
   private void configureBindings() {
