@@ -6,6 +6,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -20,6 +21,8 @@ public class Arm extends SubsystemBase {
 
     private final ShuffleboardTab tab = Shuffleboard.getTab("JoySticks");
     private final GenericEntry positionEntry = tab.add("Drawer Position", motor.getSelectedSensorPosition()).getEntry();
+
+    private Timer timer = new Timer();
 
     // private final GenericEntry kPEntry = tab.add("Arm kP", 0.0).getEntry();
     // private final GenericEntry kIEntry = tab.add("Arm kI", 0.0).getEntry();
@@ -47,10 +50,16 @@ public class Arm extends SubsystemBase {
         motor.set(TalonSRXControlMode.Position, position);
     }
 
+    public void timedMove() {
+timer.get();
+    }
+
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
         positionEntry.setDouble(motor.getSelectedSensorPosition());
+
+        setSpeed(joystick.getY());
 
         // motor.config_kP(0, kPEntry.getDouble(0.0));
         // motor.config_kI(0, kIEntry.getDouble(0.0));

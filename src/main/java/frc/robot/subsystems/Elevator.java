@@ -110,6 +110,5 @@ public class Elevator extends SubsystemBase {
         positionEntry.setDouble(encoder.getPosition());
         // setPosition(positionEntry.getDouble(Store.ELEVATOR_ENCODER_START_POSITION));
 
-        set(joystick.getY());
     }
 }

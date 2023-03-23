@@ -1,5 +1,6 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
@@ -17,7 +18,7 @@ import frc.robot.commands.arm.DrawerPosition;
 
 public class Drawer extends SubsystemBase {
     private final Joystick joystick;
-    
+
     public final TalonSRX motor = new TalonSRX(CANIDs.DRAWER);
 
     private final ShuffleboardTab tab = Shuffleboard.getTab("JoySticks");
@@ -27,30 +28,40 @@ public class Drawer extends SubsystemBase {
     private final double kI = 0.0;
     private final double kD = 0.0;
     private final double kFF = 0.0;
-    
+
     private final GenericEntry kPEntry = tab.add("Drawer kP", kP).getEntry();
     private final GenericEntry kIEntry = tab.add("Drawer kI", kI).getEntry();
     private final GenericEntry kDEntry = tab.add("Drawer kD", kD).getEntry();
     private final GenericEntry kFEntry = tab.add("Drawer kF", kFF).getEntry();
 
-    public boolean setpointModeOn;
+    public boolean setpointModeOn = true;
+
+    private double pos = 0.0;
 
     private int position = 0;
     private double[] positions = new double[OtherConstants.NUMBER_OF_POSITIONS_DRAWER];
 
     public Drawer(Joystick joystick) {
         this.joystick = joystick;
-        
+
         computePositions();
         motor.configFactoryDefault();
+        motor.setNeutralMode(NeutralMode.Brake);
 
-        // setDefaultCommand(new DrawerPosition(this, Store.DRAWER_ENCODER_START_POSITION));
+        // setDefaultCommand(new DrawerPosition(this,
+        // Store.DRAWER_ENCODER_START_POSITION));
+
+        motor.setSelectedSensorPosition(0);
+    }
+
+    public void resetEncoders() {
+        motor.setSelectedSensorPosition(0);
     }
 
     public void setSpeed(double speed) {
-        motor.set(TalonSRXControlMode.PercentOutput, speed);
+        motor.set(TalonSRXControlMode.PercentOutput, -speed);
     }
-    
+
     private void computePositions() {
         double range = Store.ELEVATOR_ENCODER_END_POSITION - Store.ELEVATOR_ENCODER_START_POSITION;
         double step = range / (OtherConstants.NUMBER_OF_POSITIONS_DRAWER);
@@ -78,7 +89,11 @@ public class Drawer extends SubsystemBase {
         setPosition(positions[position]);
     }
 
-    public void setPosition(double position) {
+    public void changePosition(double position) {
+        this.pos = position;
+    }
+
+    private void setPosition(double position) {
         motor.set(TalonSRXControlMode.Position, position);
     }
 
@@ -93,19 +108,31 @@ public class Drawer extends SubsystemBase {
         motor.config_kF(0, kFEntry.getDouble(kFF));
 
         if (setpointModeOn) {
-            double range = Store.DRAWER_ENCODER_END_POSITION - Store.DRAWER_ENCODER_START_POSITION;
-            double p = Store.DRAWER_ENCODER_START_POSITION + range * (joystick.getZ()+1)/2;
+            double range = 150;
+            double p = 0 + range * (joystick.getZ() + 1) / 2;
             setPosition(p);
+        } else {
         }
-        
+
+        if (motor.getMotorOutputPercent() != 0
+                && (motor.getSelectedSensorVelocity() < 2 && motor.getSelectedSensorVelocity() > -2)) {
+            // System.out.println("at the end point");
+            // System.out.println(motor.getSelectedSensorVelocity());
+
+            motor.setSelectedSensorPosition(0);
+        }
+
+        if (joystick.getRawButton(9)) {
+            resetEncoders();
+        }
 
         // if (getOuter()) {
-        //     Store.DRAWER_ENCODER_END_POSITION = motor.getSelectedSensorPosition();
-        //     computePositions();
+        // Store.DRAWER_ENCODER_END_POSITION = motor.getSelectedSensorPosition();
+        // computePositions();
         // }
         // if (getInner()) {
-        //     Store.DRAWER_ENCODER_START_POSITION = motor.getSelectedSensorPosition();
-        //     computePositions();
+        // Store.DRAWER_ENCODER_START_POSITION = motor.getSelectedSensorPosition();
+        // computePositions();
         // }
     }
 }

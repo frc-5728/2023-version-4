@@ -23,12 +23,14 @@ public class MoveDrawer extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    drawer.setSpeed(speed);
+    
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    drawer.setSpeed(speed);
+  }
 
   // Called once the command ends or is interrupted.
   @Override

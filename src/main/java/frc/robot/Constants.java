@@ -46,8 +46,8 @@ public final class Constants {
 
     public static class Store {
         // this is a special one as it controls the application state management
-        public static double ELEVATOR_ENCODER_START_POSITION = -16;
-        public static double ELEVATOR_ENCODER_END_POSITION = -720;
+        public static double ELEVATOR_ENCODER_START_POSITION = 0;
+        public static double ELEVATOR_ENCODER_END_POSITION = 150;
         
         public static double ARM_ENCODER_START_POSITION = 0;
         public static double ARM_ENCODER_END_POSITION = 0;

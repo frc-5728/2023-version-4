@@ -41,11 +41,8 @@ public class RobotContainer {
   private void configureBindings() {
     // bindings for drive train stuff (like ones using xbox controller)
     xboxController.start().onTrue(new TankDrive(driveTrain));
-    // xboxController.x().onTrue(Commands.run(() -> {
-    //   driveTrain.resetEncoders();
-    // }, driveTrain));
 
-    xboxController.povUp().onTrue(new MoveToDistance(driveTrain, 2));
+    xboxController.povUp().onTrue(new Move(driveTrain, 2));
     xboxController.povDown().onTrue(new Move(driveTrain, -5));
 
     configureBindingsJoystick();
@@ -67,6 +64,7 @@ public class RobotContainer {
     armDownButton.whileTrue(new MoveClaw(arm, -0.6));
     elevatorUpButton.onTrue(Commands.run(() -> elevator.moveUp(), elevator));
     elevatorDownButton.onTrue(Commands.run(() -> elevator.moveDown(), elevator));
+
     drawerUpButton.whileTrue(new MoveDrawer(drawer, 0.5));
     drawerDownButton.whileTrue(new MoveDrawer(drawer, -0.5));
     setpointModeToggleButton.onTrue(Commands.run(() -> {drawer.setSetpointModeOn(!drawer.setpointModeOn);}, drawer));
