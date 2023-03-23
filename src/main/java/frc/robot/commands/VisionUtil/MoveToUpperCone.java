@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import frc.robot.subsystems.Hatch;
 import frc.robot.subsystems.Elevator;
 import frc.robot.commands.arm.MoveElevator;
+import frc.robot.commands.arm.*;
+import frc.robot.subsystems.*;
 
 public class MoveToUpperCone extends ParallelCommandGroup {
     
@@ -19,12 +21,17 @@ public class MoveToUpperCone extends ParallelCommandGroup {
     private final double displacementCone = 0.2;
     private final double elevatorHeight = 5;
 
-    public MoveToUpperCone(ReflectiveTapeSubsystem rtSubsystem, DriveTrain driveTrain, Hatch hatch, Elevator elevator) {
+    private final Drawer drawer;
+    private final int drawerTime = 4;
+    private final int drawerSpeed = 1;
+
+    public MoveToUpperCone(ReflectiveTapeSubsystem rtSubsystem, DriveTrain driveTrain, Hatch hatch, Elevator elevator, Drawer drawer) {
 
         this.rtSubsystem = rtSubsystem;
         this.driveTrain = driveTrain;
         this.hatch = hatch;
         this.elevator = elevator;
+        this.drawer = drawer;
 
         if (rtSubsystem.hasTarget) {
 
@@ -33,7 +40,7 @@ public class MoveToUpperCone extends ParallelCommandGroup {
             addCommands(
                 
                 new MoveElevator(elevator, elevatorHeight),
-                // Move Drawer out all the way
+                new DrawerTimed(drawer, drawerTime, drawerSpeed),
                 new TurnMove(rtSubsystem, driveTrain, this.displacementCone)
 
             );
