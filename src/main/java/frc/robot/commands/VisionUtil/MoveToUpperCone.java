@@ -17,6 +17,7 @@ public class MoveToUpperCone extends ParallelCommandGroup {
     private final DriveTrain driveTrain;
     private final Elevator elevator;
     private final Hatch hatch;
+    private final Arm arm;
 
     private final double displacementCone = 0.2;
     private final double elevatorHeight = 5;
@@ -24,14 +25,16 @@ public class MoveToUpperCone extends ParallelCommandGroup {
     private final Drawer drawer;
     private final int drawerTime = 4;
     private final int drawerSpeed = 1;
+    private final int armSpeed = 1;
 
-    public MoveToUpperCone(ReflectiveTapeSubsystem rtSubsystem, DriveTrain driveTrain, Hatch hatch, Elevator elevator, Drawer drawer) {
+    public MoveToUpperCone(ReflectiveTapeSubsystem rtSubsystem, DriveTrain driveTrain, Hatch hatch, Elevator elevator, Drawer drawer, Arm arm) {
 
         this.rtSubsystem = rtSubsystem;
         this.driveTrain = driveTrain;
         this.hatch = hatch;
         this.elevator = elevator;
         this.drawer = drawer;
+        this.arm = arm;
 
         if (rtSubsystem.hasTarget) {
 
@@ -41,6 +44,7 @@ public class MoveToUpperCone extends ParallelCommandGroup {
                 
                 new MoveElevator(elevator, elevatorHeight),
                 new DrawerTimed(drawer, drawerTime, drawerSpeed),
+                new TimedClaw(arm, armSpeed),
                 new TurnMove(rtSubsystem, driveTrain, this.displacementCone)
 
             );
@@ -57,6 +61,8 @@ public class MoveToUpperCone extends ParallelCommandGroup {
         addRequirements(elevator);
         addRequirements(hatch);
         addRequirements(driveTrain);
+        addRequirements(arm);
+        addRequirements(drawer);
 
     }
 

@@ -9,6 +9,7 @@ import frc.robot.subsystems.Hatch;
 import frc.robot.subsystems.Elevator;
 import frc.robot.commands.VisionUtil.MoveToUpperBlock;
 import frc.robot.subsystems.*;
+import frc.robot.commands.VisionUtil.Normalize;
 
 public class DropBlockUpper extends SequentialCommandGroup {
     
@@ -18,6 +19,7 @@ public class DropBlockUpper extends SequentialCommandGroup {
     private final Hatch hatch;
     private final Arm arm;
     private final Drawer drawer;
+    
 
     public DropBlockUpper(AprilTagSubsystem atSubsystem, DriveTrain driveTrain, Hatch hatch, Elevator elevator, Arm arm, Drawer drawer) {
 
@@ -34,8 +36,9 @@ public class DropBlockUpper extends SequentialCommandGroup {
 
             addCommands(
                 
-                new MoveToUpperBlock(atSubsystem, driveTrain, hatch, elevator, drawer),
-                Commands.run(() -> hatch.set(true), hatch)
+                new MoveToUpperBlock(atSubsystem, driveTrain, hatch, elevator, drawer, arm),
+                Commands.run(() -> hatch.set(true), hatch),
+                new Normalize(hatch, driveTrain, elevator, drawer, arm)     
 
             );
             // parallel command to raise elevator arm
@@ -52,6 +55,7 @@ public class DropBlockUpper extends SequentialCommandGroup {
         addRequirements(hatch);
         addRequirements(elevator);
         addRequirements(drawer);
+        addRequirements(arm);
 
     }
 

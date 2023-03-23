@@ -17,6 +17,7 @@ public class MoveToUpperBlock extends ParallelCommandGroup {
     private final DriveTrain driveTrain;
     private final Elevator elevator;
     private final Hatch hatch;
+    private final Arm arm;
 
     private final double displacementCone = 0.2;
     private final double elevatorHeight = 5;
@@ -25,14 +26,16 @@ public class MoveToUpperBlock extends ParallelCommandGroup {
     private final Drawer drawer;
     private final int drawerTime = 4;
     private final int drawerSpeed = 1;
+    private final int armSpeed = 1;
 
-    public MoveToUpperBlock(AprilTagSubsystem atSubsystem, DriveTrain driveTrain, Hatch hatch, Elevator elevator, Drawer drawer) {
+    public MoveToUpperBlock(AprilTagSubsystem atSubsystem, DriveTrain driveTrain, Hatch hatch, Elevator elevator, Drawer drawer, Arm arm) {
 
         this.atSubsystem = atSubsystem;
         this.driveTrain = driveTrain;
         this.hatch = hatch;
         this.elevator = elevator;
         this.drawer = drawer;
+        this.arm = arm;
 
         if (atSubsystem.hasTarget) {
 
@@ -42,6 +45,7 @@ public class MoveToUpperBlock extends ParallelCommandGroup {
                 
                 new MoveElevator(elevator, elevatorHeight),
                 new DrawerTimed(drawer, drawerTime, drawerSpeed),
+                new TimedClaw(arm, armSpeed),
                 new TurnMove(atSubsystem, driveTrain, this.displacementCone, this.idBlock)
 
             );
@@ -58,6 +62,8 @@ public class MoveToUpperBlock extends ParallelCommandGroup {
         addRequirements(elevator);
         addRequirements(hatch);
         addRequirements(driveTrain);
+        addRequirements(arm);
+        addRequirements(drawer);
 
     }
 

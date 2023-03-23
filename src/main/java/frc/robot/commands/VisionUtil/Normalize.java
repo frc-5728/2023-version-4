@@ -1,4 +1,4 @@
-package frc.robot.commands.autos;
+package frc.robot.commands.VisionUtil;
 
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.Commands;
@@ -13,11 +13,10 @@ import frc.robot.commands.arm.DrawerTimed;
 
 import frc.robot.commands.drive.MoveToDistance;
 
-public class MoveBackAuto extends ParallelCommandGroup {
+public class Normalize extends ParallelCommandGroup {
 
     public final Hatch hatch;
     public final DriveTrain driveTrain;
-    public final double displacement;
     public final double elevatorPos = 1;
     public final Elevator elevator;
     private final Drawer drawer;
@@ -26,11 +25,10 @@ public class MoveBackAuto extends ParallelCommandGroup {
     private final Arm arm;
     private final int armSpeed = -1;
     
-    public MoveBackAuto(Hatch hatch, DriveTrain driveTrain, Elevator elevator, Drawer drawer, double displacement, Arm arm) {
+    public Normalize(Hatch hatch, DriveTrain driveTrain, Elevator elevator, Drawer drawer, Arm arm) {
 
         this.hatch = hatch;
         this.driveTrain = driveTrain;
-        this.displacement = displacement;
         this.elevator = elevator;
         this.drawer = drawer;
         this.arm = arm;
@@ -40,7 +38,6 @@ public class MoveBackAuto extends ParallelCommandGroup {
             Commands.run(() -> hatch.set(false), hatch),
             new TimedClaw(arm, armSpeed),
             new DrawerTimed(drawer, drawerTime, drawerSpeed),
-            new MoveToDistance(driveTrain, displacement),
             new MoveElevator(elevator, elevatorPos)
             // drawer
 
