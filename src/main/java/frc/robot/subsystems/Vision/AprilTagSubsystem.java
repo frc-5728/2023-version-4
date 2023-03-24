@@ -22,10 +22,10 @@ import java.util.function.Supplier;
 public class AprilTagSubsystem extends SubsystemBase {
 
     // Constants such as camera and target height stored.
-    final double CAMERA_HEIGHT_METERS = Units.inchesToMeters(68);
+    final double CAMERA_HEIGHT_METERS = Units.inchesToMeters(52);
     final double TARGET_HEIGHT_METERS = Units.inchesToMeters(15);
     // Angle between horizontal and the camera.
-    final double CAMERA_PITCH_RADIANS = Units.degreesToRadians(60);// 29.5
+    final double CAMERA_PITCH_RADIANS = Units.degreesToRadians(30);// 29.5
 
     List<PhotonTrackedTarget> targets;
     private List<Double> yawVals = new ArrayList<Double>();
