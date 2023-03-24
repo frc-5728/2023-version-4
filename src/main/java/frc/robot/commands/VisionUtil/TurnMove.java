@@ -70,6 +70,7 @@ public class TurnMove extends SequentialCommandGroup {
         }
         
         addRequirements(atSubsystem);
+        addRequirements(driveTrain);
 
     }
 

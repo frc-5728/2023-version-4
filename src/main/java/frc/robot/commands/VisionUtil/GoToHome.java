@@ -33,7 +33,8 @@ public class GoToHome extends SequentialCommandGroup {
         }
         
         addRequirements(atSubsystem);
-
+        addRequirements(driveTrain);
+        
     }
 
 }

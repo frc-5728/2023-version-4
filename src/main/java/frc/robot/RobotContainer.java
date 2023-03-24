@@ -45,13 +45,15 @@ public class RobotContainer {
   public RobotContainer() {
     configureBindings();
 
-    SmartDashboard.putData("Drop Cone Upper", new DropConeUpper(m_rtSubsystem, driveTrain, hatch, elevator));
-    SmartDashboard.putData("Drop Cone Lower", new DropConeLower(m_rtSubsystem, driveTrain, hatch, elevator));
-    SmartDashboard.putData("Drop Block Upper", new DropBlockUpper(m_atSubsystem, driveTrain, hatch, elevator));
-    SmartDashboard.putData("Drop Block Lower", new DropBlockLower(m_atSubsystem, driveTrain, hatch, elevator));
+    SmartDashboard.putData("Drop Cone Upper", new DropConeUpper(m_rtSubsystem, driveTrain, hatch, elevator, arm, drawer));
+    SmartDashboard.putData("Drop Cone Lower", new DropConeLower(m_rtSubsystem, driveTrain, hatch, elevator, arm, drawer));
+    SmartDashboard.putData("Drop Block Upper", new DropBlockUpper(m_atSubsystem, driveTrain, hatch, elevator, arm, drawer));
+    SmartDashboard.putData("Drop Block Lower", new DropBlockLower(m_atSubsystem, driveTrain, hatch, elevator, drawer, arm));
     SmartDashboard.putData("Balance", new AutoBalance(driveTrain));
     SmartDashboard.putData("Go 2 coopertition", new GoToCoopertition(m_atSubsystem, driveTrain));
     SmartDashboard.putData("Go 2 Home", new GoToHome(m_atSubsystem, driveTrain));
+    SmartDashboard.putData("AutoPeriod", new AutoPeriod(driveTrain, hatch, elevator, drawer,  arm));
+
   }
 
   private void configureBindings() {

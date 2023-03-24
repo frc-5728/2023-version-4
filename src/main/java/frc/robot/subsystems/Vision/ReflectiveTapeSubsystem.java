@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class ReflectiveTapeSubsystem extends SubsystemBase {
     
     // Constants such as camera and target height stored.
-    final double CAMERA_HEIGHT_METERS = Units.inchesToMeters(68);
+    final double CAMERA_HEIGHT_METERS = Units.inchesToMeters(69);
     final double TARGET_HEIGHT_METERS = Units.inchesToMeters(25);
     // Angle between horizontal and the camera.
     final double CAMERA_PITCH_RADIANS = Units.degreesToRadians(60);// 29.5

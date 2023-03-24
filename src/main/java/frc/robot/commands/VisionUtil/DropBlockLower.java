@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.Hatch;
 import frc.robot.subsystems.Elevator;
 import frc.robot.commands.VisionUtil.MoveToLowerBlock;
+import frc.robot.subsystems.*;
+import frc.robot.commands.VisionUtil.Normalize;
 
 public class DropBlockLower extends SequentialCommandGroup {
     
@@ -15,13 +17,17 @@ public class DropBlockLower extends SequentialCommandGroup {
     private final DriveTrain driveTrain;
     private final Elevator elevator;
     private final Hatch hatch;
+    private final Arm arm;
+    private final Drawer drawer;
 
-    public DropBlockLower(AprilTagSubsystem atSubsystem, DriveTrain driveTrain, Hatch hatch, Elevator elevator) {
+    public DropBlockLower(AprilTagSubsystem atSubsystem, DriveTrain driveTrain, Hatch hatch, Elevator elevator, Drawer drawer, Arm arm) {
 
         this.atSubsystem = atSubsystem;
         this.driveTrain = driveTrain;
         this.hatch = hatch;
         this.elevator = elevator;
+        this.arm = arm;
+        this.drawer = drawer;
 
         if (atSubsystem.hasTarget) {
 
@@ -29,9 +35,10 @@ public class DropBlockLower extends SequentialCommandGroup {
 
             addCommands(
                 
-                new MoveToLowerBlock(atSubsystem, driveTrain, hatch, elevator),
-                Commands.run(() -> hatch.set(true), hatch)
-
+                new MoveToLowerBlock(atSubsystem, driveTrain, hatch, elevator, drawer, arm),
+                Commands.run(() -> hatch.set(true), hatch),
+                new Normalize(hatch, driveTrain, elevator, drawer, arm)     
+                           
             );
             // parallel command to raise elevator arm
            
@@ -43,6 +50,11 @@ public class DropBlockLower extends SequentialCommandGroup {
         }
         
         addRequirements(atSubsystem);
+        addRequirements(driveTrain);
+        addRequirements(hatch);
+        addRequirements(elevator);
+        addRequirements(drawer);
+        addRequirements(arm);
 
     }
 
