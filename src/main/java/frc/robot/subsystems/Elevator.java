@@ -101,13 +101,13 @@ public class Elevator extends SubsystemBase {
         if (!upper.get()) {
             Store.ELEVATOR_ENCODER_END_POSITION = encoder.getPosition();
             computePositions();
-            System.out.println("upper elevator");
+            // System.out.println("upper elevator");
         }
-        if (!lower.get()) {
-            Store.ELEVATOR_ENCODER_START_POSITION = encoder.getPosition();
-            computePositions();
-            System.out.println("lower elevator");
-        }
+        // if (!lower.get()) {
+        //     Store.ELEVATOR_ENCODER_START_POSITION = encoder.getPosition();
+        //     computePositions();
+        //     System.out.println("lower elevator");
+        // }
 
         // if the direction of the y axis and the encoder decreasing is not matched
 

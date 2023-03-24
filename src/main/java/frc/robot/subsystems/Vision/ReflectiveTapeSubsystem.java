@@ -47,12 +47,13 @@ public class ReflectiveTapeSubsystem extends SubsystemBase {
             SmartDashboard.putNumber("RFT Yaw Value", yawVal);
             SmartDashboard.putNumber("RFT Pitch Value", pitchVal);
             SmartDashboard.putNumber("RFT Area Value", areaVal);
-            SmartDashboard.putBoolean("RFT Captured tape?", hasTarget);
 
         } else {
             this.hasTarget = false;
-            SmartDashboard.putBoolean("Captured tape?", hasTarget);
         }
+
+        SmartDashboard.putBoolean("RFT Captured tape?", hasTarget);
+
     }
 
     public double getRange() {
