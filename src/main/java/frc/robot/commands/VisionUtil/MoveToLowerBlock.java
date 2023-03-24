@@ -20,15 +20,15 @@ public class MoveToLowerBlock extends ParallelCommandGroup {
     private final Arm arm;
 
     private final double displacementCone = 0.2;
-    private final double elevatorHeight = 4;
-    private final int idBlock = 5;
+    private final double elevatorHeight = 5;
+    private final int idBlock;
 
     private final Drawer drawer;
     private final int drawerTime = 4;
     private final int drawerSpeed = -1;
     private final int armSpeed = 1;
 
-    public MoveToLowerBlock(AprilTagSubsystem atSubsystem, DriveTrain driveTrain, Hatch hatch, Elevator elevator, Drawer drawer, Arm arm) {
+    public MoveToLowerBlock(AprilTagSubsystem atSubsystem, DriveTrain driveTrain, Hatch hatch, Elevator elevator, Drawer drawer, Arm arm, int idBlock) {
 
         this.atSubsystem = atSubsystem;
         this.driveTrain = driveTrain;
@@ -36,6 +36,7 @@ public class MoveToLowerBlock extends ParallelCommandGroup {
         this.elevator = elevator;
         this.drawer = drawer;
         this.arm = arm;
+        this.idBlock = idBlock;
 
         if (atSubsystem.hasTarget) {
 

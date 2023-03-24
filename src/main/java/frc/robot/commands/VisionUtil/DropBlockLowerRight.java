@@ -11,7 +11,7 @@ import frc.robot.commands.VisionUtil.MoveToLowerBlock;
 import frc.robot.subsystems.*;
 import frc.robot.commands.VisionUtil.Normalize;
 
-public class DropBlockLower extends SequentialCommandGroup {
+public class DropBlockLowerRight extends SequentialCommandGroup {
     
     private final AprilTagSubsystem atSubsystem;
     private final DriveTrain driveTrain;
@@ -19,8 +19,9 @@ public class DropBlockLower extends SequentialCommandGroup {
     private final Hatch hatch;
     private final Arm arm;
     private final Drawer drawer;
+    private final int idBlock = 1;
 
-    public DropBlockLower(AprilTagSubsystem atSubsystem, DriveTrain driveTrain, Hatch hatch, Elevator elevator, Drawer drawer, Arm arm) {
+    public DropBlockLowerRight(AprilTagSubsystem atSubsystem, DriveTrain driveTrain, Hatch hatch, Elevator elevator, Drawer drawer, Arm arm) {
 
         this.atSubsystem = atSubsystem;
         this.driveTrain = driveTrain;
@@ -35,7 +36,7 @@ public class DropBlockLower extends SequentialCommandGroup {
 
             addCommands(
                 
-                new MoveToLowerBlock(atSubsystem, driveTrain, hatch, elevator, drawer, arm),
+                new MoveToLowerBlock(atSubsystem, driveTrain, hatch, elevator, drawer, arm, idBlock),
                 Commands.run(() -> hatch.set(true), hatch),
                 new Normalize(hatch, driveTrain, elevator, drawer, arm)     
                            

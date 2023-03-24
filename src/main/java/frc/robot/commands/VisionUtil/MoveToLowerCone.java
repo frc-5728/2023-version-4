@@ -24,8 +24,8 @@ public class MoveToLowerCone extends ParallelCommandGroup {
     private final int drawerSpeed = -1;
     private final int armSpeed = 1;
 
-    private final double displacementCone = 0.2;
-    private final double elevatorHeight = 4;
+    private final double displacementCone = 1;
+    private final double elevatorHeight = 5;
 
     public MoveToLowerCone(ReflectiveTapeSubsystem rtSubsystem, DriveTrain driveTrain, Hatch hatch, Elevator elevator, Drawer drawer, Arm arm) {
 

@@ -7,11 +7,11 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 import frc.robot.subsystems.Hatch;
 import frc.robot.subsystems.Elevator;
-import frc.robot.commands.VisionUtil.MoveToUpperBlock;
+import frc.robot.commands.VisionUtil.MoveToLowerBlock;
 import frc.robot.subsystems.*;
 import frc.robot.commands.VisionUtil.Normalize;
 
-public class DropBlockUpper extends SequentialCommandGroup {
+public class DropBlockLowerLeft extends SequentialCommandGroup {
     
     private final AprilTagSubsystem atSubsystem;
     private final DriveTrain driveTrain;
@@ -19,9 +19,9 @@ public class DropBlockUpper extends SequentialCommandGroup {
     private final Hatch hatch;
     private final Arm arm;
     private final Drawer drawer;
-    
+    private final int idBlock = 3;
 
-    public DropBlockUpper(AprilTagSubsystem atSubsystem, DriveTrain driveTrain, Hatch hatch, Elevator elevator, Arm arm, Drawer drawer) {
+    public DropBlockLowerLeft(AprilTagSubsystem atSubsystem, DriveTrain driveTrain, Hatch hatch, Elevator elevator, Drawer drawer, Arm arm) {
 
         this.atSubsystem = atSubsystem;
         this.driveTrain = driveTrain;
@@ -36,10 +36,10 @@ public class DropBlockUpper extends SequentialCommandGroup {
 
             addCommands(
                 
-                new MoveToUpperBlock(atSubsystem, driveTrain, hatch, elevator, drawer, arm),
+                new MoveToLowerBlock(atSubsystem, driveTrain, hatch, elevator, drawer, arm, idBlock),
                 Commands.run(() -> hatch.set(true), hatch),
                 new Normalize(hatch, driveTrain, elevator, drawer, arm)     
-
+                           
             );
             // parallel command to raise elevator arm
            
