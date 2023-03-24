@@ -21,9 +21,9 @@ public class Move extends PIDCommand {
   private final double kI = 0;
   private final double kD = 0;
 
-  private final GenericEntry pEntry = tab.add(getName() + " P", kP).getEntry();
-  private final GenericEntry iEntry = tab.add(getName() + " I", kI).getEntry();
-  private final GenericEntry dEntry = tab.add(getName() + " D", kD).getEntry();
+  // private final GenericEntry pEntry = tab.add(getName() + " P", kP).getEntry();
+  // private final GenericEntry iEntry = tab.add(getName() + " I", kI).getEntry();
+  // private final GenericEntry dEntry = tab.add(getName() + " D", kD).getEntry();
 
   /** Creates a new Move. */
   public Move(DriveTrain driveTrain, double distance) {

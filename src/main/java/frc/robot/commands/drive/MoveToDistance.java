@@ -16,14 +16,9 @@ import frc.robot.subsystems.DriveTrain;
 // information, see:
 // https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
 public class MoveToDistance extends PIDCommand {
-  private final ShuffleboardTab tab = Shuffleboard.getTab(getName());
   private final double kP = 0.0003;
   private final double kI = 0;
   private final double kD = 0;
-
-  private final GenericEntry pEntry = tab.add(getName() + " P", kP).getEntry();
-  private final GenericEntry iEntry = tab.add(getName() + " I", kI).getEntry();
-  private final GenericEntry dEntry = tab.add(getName() + " D", kD).getEntry();
 
   /** Creates a new Move. */
   public MoveToDistance(DriveTrain driveTrain, double distance) {

@@ -65,7 +65,7 @@ public class RobotContainer {
     xboxController.start().onTrue(new TankDrive(driveTrain));
 
     // xboxController.povUp().onTrue(new Move(driveTrain, 2));
-    xboxController.povUp().onTrue(new Move(driveTrain, 5));
+    xboxController.povUp().onTrue(new MoveToDistance(driveTrain, 5));
 
     configureBindingsJoystick();
   }
@@ -93,6 +93,6 @@ public class RobotContainer {
   }
 
   public Command getAutonomousCommand() {
-    return Commands.print("No autonomous command configured");
+    return new AutoPeriod(driveTrain, hatch, elevator, drawer, arm);
   }
 }
