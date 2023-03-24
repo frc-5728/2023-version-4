@@ -33,7 +33,7 @@ public class MoveToDistance extends PIDCommand {
         // This should return the measurement
         () -> driveTrain.leftEncoder.getPosition(),
         // This should return the setpoint (can also be a constant)
-        () -> distance,
+        () -> distance + driveTrain.leftEncoder.getPosition(),
         // This uses the output
         output -> {
           // Use the output here

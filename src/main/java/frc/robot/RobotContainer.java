@@ -14,6 +14,7 @@ import frc.robot.Constants.OperatorConstants;
 import frc.robot.commands.arm.HatchCommand;
 import frc.robot.commands.arm.MoveClaw;
 import frc.robot.commands.arm.MoveDrawer;
+import frc.robot.commands.arm.MoveElevator;
 import frc.robot.commands.drive.Move;
 import frc.robot.commands.drive.MoveToDistance;
 import frc.robot.commands.drive.TankDrive;
@@ -57,8 +58,8 @@ public class RobotContainer {
     // bindings for drive train stuff (like ones using xbox controller)
     xboxController.start().onTrue(new TankDrive(driveTrain));
 
-    xboxController.povUp().onTrue(new Move(driveTrain, 2));
-    xboxController.povDown().onTrue(new Move(driveTrain, -5));
+    // xboxController.povUp().onTrue(new Move(driveTrain, 2));
+    xboxController.povUp().onTrue(new Move(driveTrain, 5));
 
     configureBindingsJoystick();
   }
@@ -77,8 +78,8 @@ public class RobotContainer {
     triggerButton.whileTrue(new HatchCommand(hatch));
     armUpButton.whileTrue(new MoveClaw(arm, 0.6));
     armDownButton.whileTrue(new MoveClaw(arm, -0.6));
-    elevatorUpButton.onTrue(Commands.run(() -> elevator.moveUp(), elevator));
-    elevatorDownButton.onTrue(Commands.run(() -> elevator.moveDown(), elevator));
+    elevatorUpButton.whileTrue(new MoveElevator(elevator, 1));
+    elevatorDownButton.whileTrue(new MoveElevator(elevator, -1));
 
     drawerUpButton.whileTrue(new MoveDrawer(drawer, 0.5));
     drawerDownButton.whileTrue(new MoveDrawer(drawer, -0.5));

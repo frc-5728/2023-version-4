@@ -110,7 +110,7 @@ public class Drawer extends SubsystemBase {
         if (setpointModeOn) {
             double range = 150;
             double p = 0 + range * (joystick.getZ() + 1) / 2;
-            setPosition(p);
+            // setPosition(p);
         } else {
         }
 
@@ -119,7 +119,7 @@ public class Drawer extends SubsystemBase {
             // System.out.println("at the end point");
             // System.out.println(motor.getSelectedSensorVelocity());
 
-            motor.setSelectedSensorPosition(0);
+            // motor.setSelectedSensorPosition(0);
         }
 
         if (joystick.getRawButton(9)) {

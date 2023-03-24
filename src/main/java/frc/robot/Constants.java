@@ -11,12 +11,12 @@ public final class Constants {
 
     public static class JoystickIDs {
         public static final int JOYSTICK_TRIGGER_ID = 1;
-        public static final int ARM_UP_JOYSTICK_ID = 6;
-        public static final int ARM_DOWN_JOYSTICK_ID = 7;
+        public static final int ARM_UP_JOYSTICK_ID = 11;
+        public static final int ARM_DOWN_JOYSTICK_ID = 10;
         public static final int ELEVATOR_UP_JOYSTICK_ID = 3;
         public static final int ELEVATOR_DOWN_JOYSTICK_ID = 2;
-        public static final int DRAWER_UP_JOYSTICK_ID = 5;
-        public static final int DRAWER_DOWN_JOYSTICK_ID = 4;
+        public static final int DRAWER_UP_JOYSTICK_ID = 6;
+        public static final int DRAWER_DOWN_JOYSTICK_ID = 7;
     }
 
     public static class CANIDs {
@@ -48,7 +48,7 @@ public final class Constants {
         // this is a special one as it controls the application state management
         public static double ELEVATOR_ENCODER_START_POSITION = 0;
         public static double ELEVATOR_ENCODER_END_POSITION = 150;
-        
+
         public static double ARM_ENCODER_START_POSITION = 0;
         public static double ARM_ENCODER_END_POSITION = 0;
 

@@ -5,9 +5,11 @@ import frc.robot.subsystems.Elevator;
 
 public class MoveElevator extends CommandBase {
     private final Elevator elevator;
+    private final double speed;
 
-    public MoveElevator(Elevator elevator, double position) {
+    public MoveElevator(Elevator elevator, double speed) {
         this.elevator = elevator;
+        this.speed = speed;
 
         // Use addRequirements() here to declare subsystem dependencies.
         addRequirements(elevator);
@@ -16,6 +18,7 @@ public class MoveElevator extends CommandBase {
     // Called when the command is initially scheduled.
     @Override
     public void initialize() {
+        elevator.set(speed);
     }
 
     // Called every time the scheduler runs while the command is scheduled.
@@ -26,11 +29,12 @@ public class MoveElevator extends CommandBase {
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
+        elevator.set(0);
     }
 
     // Returns true when the command should end.
     @Override
     public boolean isFinished() {
-        return elevator.upper.get() || elevator.lower.get();
+        return false;
     }
 }
