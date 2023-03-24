@@ -20,8 +20,8 @@ public class AutoPeriod extends SequentialCommandGroup {
     private final Drawer drawer;
     private final Arm arm;
 
-    private final double dist1 = 4.2672;
-    private final double dist2 = 1.2192;
+    private final double dist1 = -4.2672;
+    private final double dist2 = 1.3192;
     private final int drawerTime = 4;
     private final int drawerSpeed = 1;
     private final int armSpeed = 1;
@@ -42,6 +42,7 @@ public class AutoPeriod extends SequentialCommandGroup {
             Commands.run(() -> hatch.set(true), hatch),
             new MoveBackAuto(hatch, driveTrain, elevator, drawer, this.dist1, arm),
             new MoveToDistance(driveTrain, dist2),
+            // new,
             new AutoBalance(driveTrain)
 
         );
