@@ -3,14 +3,18 @@ package frc.robot.commands.drive;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.OperatorConstants;
+import frc.robot.Constants.Store;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Elevator;
 
 public class TankDrive extends CommandBase {
-    DriveTrain driveTrain;
-    XboxController controller = new XboxController(OperatorConstants.xboxControllerPort);
+    private final DriveTrain driveTrain;
+    private final XboxController controller = new XboxController(OperatorConstants.xboxControllerPort);
+    private final Elevator elevator;
 
-    public TankDrive(DriveTrain driveTrain) {
+    public TankDrive(DriveTrain driveTrain, Elevator elevator) {
         this.driveTrain = driveTrain;
+        this.elevator = elevator;
 
         addRequirements(driveTrain);
     }

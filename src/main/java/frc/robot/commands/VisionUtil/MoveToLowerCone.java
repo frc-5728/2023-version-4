@@ -7,12 +7,11 @@ import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 
 import frc.robot.subsystems.Hatch;
 import frc.robot.subsystems.Elevator;
-import frc.robot.commands.arm.MoveElevator;
 import frc.robot.commands.arm.*;
 import frc.robot.subsystems.*;
 
 public class MoveToLowerCone extends ParallelCommandGroup {
-    
+
     private final ReflectiveTapeSubsystem rtSubsystem;
     private final DriveTrain driveTrain;
     private final Elevator elevator;
@@ -20,14 +19,15 @@ public class MoveToLowerCone extends ParallelCommandGroup {
     private final Arm arm;
 
     private final Drawer drawer;
-    private final int drawerTime = 4;
+    private final float clawTime = 1f;
     private final int drawerSpeed = -1;
     private final int armSpeed = 1;
 
     private final double displacementCone = 1;
-    private final double elevatorHeight = 5;
+    private final int elevatorHeight = 5;
 
-    public MoveToLowerCone(ReflectiveTapeSubsystem rtSubsystem, DriveTrain driveTrain, Hatch hatch, Elevator elevator, Drawer drawer, Arm arm) {
+    public MoveToLowerCone(ReflectiveTapeSubsystem rtSubsystem, DriveTrain driveTrain, Hatch hatch, Elevator elevator,
+            Drawer drawer, Arm arm) {
 
         this.rtSubsystem = rtSubsystem;
         this.driveTrain = driveTrain;
@@ -41,22 +41,20 @@ public class MoveToLowerCone extends ParallelCommandGroup {
             // Change values to correct units
 
             addCommands(
-                
-                new MoveElevator(elevator, elevatorHeight),
-                new DrawerTimed(drawer, drawerTime, drawerSpeed),
-                new TimedClaw(arm, armSpeed),
-                new TurnMove(rtSubsystem, driveTrain, this.displacementCone)
+
+                    new DrawerTimed(drawer, drawerSpeed),
+                    new TimedClaw(arm, armSpeed, clawTime),
+                    new TurnMove(rtSubsystem, driveTrain, this.displacementCone)
 
             );
             // parallel command to raise elevator arm
-           
+
             // sequential command to release cone
 
-        }
-        else {
+        } else {
             System.out.println("No target");
         }
-        
+
         addRequirements(rtSubsystem);
         addRequirements(elevator);
         addRequirements(hatch);

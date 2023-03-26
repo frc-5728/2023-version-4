@@ -28,7 +28,7 @@ public class DriveTrain extends SubsystemBase {
     public final SparkMaxPIDController leftPID = leftCanSparkMax.getPIDController();
     public final SparkMaxPIDController rightPID = rightCanSparkMax.getPIDController();
 
-    public final AHRS gyro = new AHRS();
+    public final static AHRS gyro = new AHRS();
 
     private final ShuffleboardTab tab = Shuffleboard.getTab("Drive");
 
@@ -37,7 +37,7 @@ public class DriveTrain extends SubsystemBase {
 
     private final XboxController xboxController = new XboxController(OperatorConstants.xboxControllerPort);
 
-    public DriveTrain() {
+    public DriveTrain(Elevator elevator) {
         rightCanSparkMax.setInverted(true);
         
         leftFollowCanSparkMax.follow(leftCanSparkMax);
@@ -51,7 +51,7 @@ public class DriveTrain extends SubsystemBase {
         // rightCanSparkMax.burnFlash();
         // rightFollowCanSparkMax.burnFlash();
 
-        setDefaultCommand(new TankDrive(this));
+        setDefaultCommand(new TankDrive(this, elevator));
     }
 
     public void resetEncoders() {

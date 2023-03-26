@@ -10,6 +10,8 @@ import frc.robot.subsystems.Elevator;
 import frc.robot.commands.VisionUtil.MoveToUpperBlock;
 import frc.robot.subsystems.*;
 import frc.robot.commands.VisionUtil.Normalize;
+import frc.robot.commands.arm.*;
+
 
 public class DropBlockUpperLeft extends SequentialCommandGroup {
     
@@ -37,7 +39,7 @@ public class DropBlockUpperLeft extends SequentialCommandGroup {
             addCommands(
                 
                 new MoveToUpperBlock(atSubsystem, driveTrain, hatch, elevator, drawer, arm, idBlock),
-                Commands.run(() -> hatch.set(true), hatch),
+                new TimedHatchToggle(hatch, 0.5),
                 new Normalize(hatch, driveTrain, elevator, drawer, arm)     
 
             );

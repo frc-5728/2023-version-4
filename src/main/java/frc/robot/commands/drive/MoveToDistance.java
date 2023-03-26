@@ -20,27 +20,35 @@ public class MoveToDistance extends PIDCommand {
   private final double kI = 0;
   private final double kD = 0;
 
+  private final DriveTrain driveTrain;
+
   /** Creates a new Move. */
   public MoveToDistance(DriveTrain driveTrain, double distance) {
     super(
         // The controller that the command will use
-        new PIDController(0.06, 0.01, 0.1),
+        new PIDController(0.07, 0.01, 0.1),
         // This should return the measurement
         () -> driveTrain.leftEncoder.getPosition(),
         // This should return the setpoint (can also be a constant)
-        () -> distance + driveTrain.leftEncoder.getPosition(),
+        () -> distance,
         // This uses the output
         output -> {
           // Use the output here
-          driveTrain.setSpeed(MathUtil.clamp(output, -0.5, 0.5));
+          driveTrain.setSpeed(MathUtil.clamp(output, -0.7, 0.7));
         });
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.
     addRequirements(driveTrain);
 
     driveTrain.resetEncoders();
+    this.driveTrain = driveTrain;
   }
 
+  @Override
+  public void initialize() {
+    driveTrain.resetEncoders();
+  }
+  
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {

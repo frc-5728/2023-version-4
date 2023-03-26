@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 import frc.robot.commands.autos.*;
 import frc.robot.commands.drive.*;
+import frc.robot.commands.drive.MoveToDistance;
 import frc.robot.commands.arm.*;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Hatch;
@@ -21,10 +22,12 @@ public class AutoPeriod extends SequentialCommandGroup {
     private final Arm arm;
 
     private final double dist1 = -4.2672;
-    private final double dist2 = 1.3192;
-    private final int drawerTime = 4;
+    private final double dist2 = 2.1192;
+    private final float clawTime = 2.3f;
     private final int drawerSpeed = 1;
     private final int armSpeed = 1;
+    private final float clawTime2 = 0.3f;
+    private final int armSpeed2 = -1;
 
     public AutoPeriod(DriveTrain driveTrain, Hatch hatch, Elevator elevator, Drawer drawer, Arm arm) {
 
@@ -37,13 +40,12 @@ public class AutoPeriod extends SequentialCommandGroup {
         addCommands(
               
             // move drawer out
-            new TimedClaw(arm, armSpeed),
-            new DrawerTimed(drawer, drawerTime, drawerSpeed),
-            Commands.run(() -> hatch.set(true), hatch),
-            new MoveBackAuto(hatch, driveTrain, elevator, drawer, this.dist1, arm),
-            new MoveToDistance(driveTrain, dist2),
-            // new,
-            new AutoBalance(driveTrain)
+            new TimedClaw(arm, armSpeed, clawTime),
+            new DrawerTimed(drawer, drawerSpeed),
+            new TimedHatchToggle(hatch, 0.5),
+            new MoveBackAuto(hatch, driveTrain, elevator, drawer, this.dist1, arm)
+            //new MoveToDistance(driveTrain, dist2),
+            //new AutoBalance(driveTrain)
 
         );
         // parallel command to raise elevator arm

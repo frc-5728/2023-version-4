@@ -7,10 +7,15 @@ import frc.robot.Constants.OtherConstants;
 
 public class Hatch extends SubsystemBase {
     Solenoid solenoid = new Solenoid(PneumaticsModuleType.REVPH, OtherConstants.SOLENOID_CHANNEL);
-    private boolean isOpen;
+    private boolean isOpen = false;
 
     public void set(boolean isOpen) {
-        solenoid.set(isOpen);
+        this.isOpen = isOpen;
+        solenoid.set(this.isOpen);
+    }
+
+    public boolean get() {
+        return isOpen;
     }
 
     public void toggle() {

@@ -10,14 +10,13 @@ import frc.robot.subsystems.Drawer;
 
 public class DrawerTimed extends CommandBase {
   private final Drawer drawer;
-  private final int time;
+  private final float time = 0.5f;
   private final int speed;
   private final Timer timer = new Timer();
   
   /** Creates a new DrawerTimed. */
-  public DrawerTimed(Drawer drawer, int time, int speed) {
+  public DrawerTimed(Drawer drawer, int speed) {
     this.drawer = drawer;
-    this.time = time;
     this.speed = speed;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(drawer);
@@ -26,21 +25,26 @@ public class DrawerTimed extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    timer.reset();
     timer.start();
     drawer.setSpeed(speed);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {}
+  public void execute() {
+    drawer.setSpeed(speed);
+  }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+    drawer.setSpeed(0);
+  }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return timer.get() == time;
+    return timer.get() >= time;
   }
 }

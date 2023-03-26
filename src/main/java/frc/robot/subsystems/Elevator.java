@@ -18,7 +18,7 @@ import frc.robot.Constants.Store;
 
 public class Elevator extends SubsystemBase {
     CANSparkMax motor = new CANSparkMax(CANIDs.ELEVATOR, MotorType.kBrushless);
-    RelativeEncoder encoder = motor.getEncoder();
+    public final RelativeEncoder encoder = motor.getEncoder();
     SparkMaxPIDController pid = motor.getPIDController();
 
     private final Joystick joystick;
@@ -44,6 +44,8 @@ public class Elevator extends SubsystemBase {
         pid.setFF(0);
 
         computePositions();
+
+        encoder.setPosition(0);
     }
 
     private void computePositions() {
@@ -53,11 +55,7 @@ public class Elevator extends SubsystemBase {
         for (int i = 0; i < OtherConstants.NUMBER_OF_POSITIONS_ELEVATOR; i++) {
             positions[i] = Store.ELEVATOR_ENCODER_START_POSITION + (i * step);
         }
-        positions[positions.length-1] = Store.ELEVATOR_ENCODER_END_POSITION;
-    }
-
-    private void reverse() {
-        motor.set(1);
+        positions[positions.length - 1] = Store.ELEVATOR_ENCODER_END_POSITION;
     }
 
     public void moveUp() {
@@ -79,13 +77,19 @@ public class Elevator extends SubsystemBase {
         setPosition(positions[position]);
     }
 
+    // private void lowerElevatorGyro() {
+    //     if (DriveTrain.gyro.getPitch() > 25 || DriveTrain.gyro.getRoll() > 25) {
+    //         set(-1);
+    //     }
+    // }
+
     public void setPosition(double position) {
         pid.setReference(position, ControlType.kPosition);
     }
 
     public void set(double speed) {
         speed = -speed;
-        
+
         if (!upper.get() && speed < 0) {
             speed = 0;
         }
@@ -98,16 +102,23 @@ public class Elevator extends SubsystemBase {
     @Override
     public void periodic() {
         // This method will be called once per scheduler run
+
         if (!upper.get()) {
-            Store.ELEVATOR_ENCODER_END_POSITION = encoder.getPosition();
+            encoder.setPosition(0);
             computePositions();
+
             // System.out.println("upper elevator");
         }
-        // if (!lower.get()) {
-        //     Store.ELEVATOR_ENCODER_START_POSITION = encoder.getPosition();
-        //     computePositions();
-        //     System.out.println("lower elevator");
-        // }
+        if (!lower.get()) {
+            Store.ELEVATOR_ENCODER_END_POSITION = encoder.getPosition();
+            computePositions();
+        }
+
+        // lowerElevatorGyro();
+
+        // 0 - 420
+        // System.out.println(encoder.getPosition());
+
 
         // if the direction of the y axis and the encoder decreasing is not matched
 

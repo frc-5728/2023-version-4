@@ -4,51 +4,39 @@
 
 package frc.robot.commands.arm;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.Drawer;
+import frc.robot.subsystems.Elevator;
 
-public class TimedClaw extends CommandBase {
-  private final Arm arm;
-  private final double speed;
-  private final float time;
-
-  private final Timer timer = new Timer();
+public class ElevatorEncoder extends CommandBase {
+  /** Creates a new ElevatorEncoder. */
+  private final Elevator elevator;
   
-  /** Creates a new TimedClaw. */
-  public TimedClaw(Arm arm, double speed, float time) {
-    this.arm = arm;
-    this.speed = speed;
-    this.time = time;
-    
+  public ElevatorEncoder(Elevator elevator) {
+    this.elevator = elevator;
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(arm);
+    addRequirements(elevator);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    timer.reset();
-    
-    timer.start();
+    elevator.set(-0.5);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    arm.setSpeed(speed);
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    arm.setSpeed(0);
-    timer.stop();
+    elevator.set(0);
   }
 
   // Returns true when the command should end.
   @Override
-  public boolean isFinished() {    
-    return timer.get() >= time;
+  public boolean isFinished() {
+    return elevator.lower.get();
   }
 }

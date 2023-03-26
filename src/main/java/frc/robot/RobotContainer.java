@@ -15,6 +15,7 @@ import frc.robot.commands.arm.HatchCommand;
 import frc.robot.commands.arm.MoveClaw;
 import frc.robot.commands.arm.MoveDrawer;
 import frc.robot.commands.arm.MoveElevator;
+import frc.robot.commands.arm.TimedClaw;
 import frc.robot.commands.drive.Move;
 import frc.robot.commands.drive.MoveToDistance;
 import frc.robot.commands.drive.TankDrive;
@@ -33,11 +34,11 @@ public class RobotContainer {
       OperatorConstants.xboxControllerPort);
   private final Joystick joystick = new Joystick(OperatorConstants.joystickPort);
 
-  private final DriveTrain driveTrain = new DriveTrain();
+  private final Elevator elevator = new Elevator(joystick);
+  private final DriveTrain driveTrain = new DriveTrain(elevator);
   private final Hatch hatch = new Hatch();
   private final Arm arm = new Arm(joystick);
   private final Drawer drawer = new Drawer(joystick);
-  private final Elevator elevator = new Elevator(joystick);
 
   private final ReflectiveTapeSubsystem m_rtSubsystem = new ReflectiveTapeSubsystem();
   private final AprilTagSubsystem m_atSubsystem = new AprilTagSubsystem();
@@ -56,13 +57,14 @@ public class RobotContainer {
     SmartDashboard.putData("Balance", new AutoBalance(driveTrain));
     SmartDashboard.putData("Go 2 coopertition", new GoToCoopertition(m_atSubsystem, driveTrain));
     SmartDashboard.putData("Go 2 Home", new GoToHome(m_atSubsystem, driveTrain));
-    SmartDashboard.putData("AutoPeriod", new AutoPeriod(driveTrain, hatch, elevator, drawer,  arm));
+    SmartDashboard.putData("7AutoPeriod", new AutoPeriod(driveTrain, hatch, elevator, drawer,  arm));
+
 
   }
 
   private void configureBindings() {
     // bindings for drive train stuff (like ones using xbox controller)
-    xboxController.start().onTrue(new TankDrive(driveTrain));
+    xboxController.start().onTrue(new TankDrive(driveTrain, elevator));
 
     // xboxController.povUp().onTrue(new Move(driveTrain, 2));
     xboxController.povUp().onTrue(new MoveToDistance(driveTrain, 5));
@@ -87,7 +89,7 @@ public class RobotContainer {
     elevatorUpButton.whileTrue(new MoveElevator(elevator, 1));
     elevatorDownButton.whileTrue(new MoveElevator(elevator, -1));
 
-    drawerUpButton.whileTrue(new MoveDrawer(drawer, 0.5));
+    drawerUpButton.whileTrue(new MoveDrawer(drawer, 0.7));
     drawerDownButton.whileTrue(new MoveDrawer(drawer, -0.5));
     setpointModeToggleButton.onTrue(Commands.run(() -> {drawer.setSetpointModeOn(!drawer.setpointModeOn);}, drawer));
   }

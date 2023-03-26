@@ -9,8 +9,6 @@ import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.*;
 import frc.robot.commands.arm.*;
 import frc.robot.subsystems.Drawer;
-import frc.robot.commands.arm.DrawerTimed;
-
 import frc.robot.commands.drive.MoveToDistance;
 
 public class MoveBackAuto extends ParallelCommandGroup {
@@ -18,10 +16,10 @@ public class MoveBackAuto extends ParallelCommandGroup {
     public final Hatch hatch;
     public final DriveTrain driveTrain;
     public final double displacement;
-    public final double elevatorPos = 1;
+    public final int elevatorPos = 1;
     public final Elevator elevator;
     private final Drawer drawer;
-    private final int drawerTime = 4;
+    private final float clawTime = 2.4f;
     private final int drawerSpeed = -1;
     private final Arm arm;
     private final int armSpeed = -1;
@@ -37,11 +35,10 @@ public class MoveBackAuto extends ParallelCommandGroup {
 
         addCommands(
                 
-            Commands.run(() -> hatch.set(false), hatch),
-            new TimedClaw(arm, armSpeed),
-            new DrawerTimed(drawer, drawerTime, drawerSpeed),
+            new TimedClaw(arm, armSpeed, clawTime),
+            new DrawerTimed(drawer, drawerSpeed),
             new MoveToDistance(driveTrain, displacement),
-            new MoveElevator(elevator, elevatorPos)
+            new ElevatorTimedDown(elevator, 2.5f)
             // drawer
 
         );

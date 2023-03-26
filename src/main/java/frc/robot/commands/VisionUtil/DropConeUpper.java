@@ -10,6 +10,8 @@ import frc.robot.subsystems.Elevator;
 import frc.robot.commands.VisionUtil.MoveToUpperCone;
 import frc.robot.subsystems.*;
 import frc.robot.commands.VisionUtil.Normalize;
+import frc.robot.commands.arm.*;
+
 
 public class DropConeUpper extends SequentialCommandGroup {
     
@@ -36,7 +38,7 @@ public class DropConeUpper extends SequentialCommandGroup {
             addCommands(
                 
                 new MoveToUpperCone(rtSubsystem, driveTrain, hatch, elevator, drawer, arm),
-                Commands.run(() -> hatch.set(true), hatch),
+                new TimedHatchToggle(hatch, 0.5),
                 new Normalize(hatch, driveTrain, elevator, drawer, arm)     
 
             );
