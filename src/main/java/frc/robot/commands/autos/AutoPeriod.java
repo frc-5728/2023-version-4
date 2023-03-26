@@ -43,9 +43,9 @@ public class AutoPeriod extends SequentialCommandGroup {
             new TimedClaw(arm, armSpeed, clawTime),
             new DrawerTimed(drawer, drawerSpeed),
             new TimedHatchToggle(hatch, 0.5),
-            new MoveBackAuto(hatch, driveTrain, elevator, drawer, this.dist1, arm)
-            //new MoveToDistance(driveTrain, dist2),
-            //new AutoBalance(driveTrain)
+            new MoveBackAuto(hatch, driveTrain, elevator, drawer, this.dist1, arm),
+            new MoveToDistance(driveTrain, dist2),
+            new AutoBalance(driveTrain)
 
         );
         // parallel command to raise elevator arm
