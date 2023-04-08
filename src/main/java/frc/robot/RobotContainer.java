@@ -54,11 +54,12 @@ public class RobotContainer {
     SmartDashboard.putData("Drop Block Lower Right", new DropBlockLowerRight(m_atSubsystem, driveTrain, hatch, elevator, drawer, arm));
     SmartDashboard.putData("Drop Block Upper Middle", new DropBlockUpperMiddle(m_atSubsystem, driveTrain, hatch, elevator, arm, drawer));
     SmartDashboard.putData("Drop Block Upper Right", new DropBlockUpperRight(m_atSubsystem, driveTrain, hatch, elevator, arm, drawer));
-    SmartDashboard.putData("Balance", new AutoBalance(driveTrain));
+    SmartDashboard.putData("Balance", new AutoDrawerBalance(driveTrain, drawer));
     SmartDashboard.putData("Go 2 coopertition", new GoToCoopertition(m_atSubsystem, driveTrain));
     SmartDashboard.putData("Go 2 Home", new GoToHome(m_atSubsystem, driveTrain));
     SmartDashboard.putData("7AutoPeriod", new AutoPeriod(driveTrain, hatch, elevator, drawer,  arm));
-
+    SmartDashboard.putData("Auto Get Ready To Drop Top", new AutoTop( elevator, drawer,  arm));
+    SmartDashboard.putData("Auto Get Ready To Drop Bottom", new AutoBottom( elevator, drawer,  arm));
 
   }
 

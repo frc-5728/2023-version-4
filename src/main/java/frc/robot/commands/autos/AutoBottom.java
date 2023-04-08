@@ -1,3 +1,4 @@
+
 package frc.robot.commands.autos;
 
 import frc.robot.subsystems.DriveTrain;
@@ -13,26 +14,22 @@ import frc.robot.subsystems.Hatch;
 import frc.robot.subsystems.Drawer;
 import frc.robot.subsystems.*;
 
-public class AutoPeriod extends SequentialCommandGroup {
+public class AutoBottom extends SequentialCommandGroup {
 
-    private final DriveTrain driveTrain;
-    private final Hatch hatch;
     private final Elevator elevator;
     private final Drawer drawer;
     private final Arm arm;
 
     private final double dist1 = -4.0672;
-    private final double dist2 = 1.95;
+    private final double dist2 = 2.1192;
     private final float clawTime = 2.3f;
     private final int drawerSpeed = 1;
     private final int armSpeed = 1;
     private final float clawTime2 = 0.3f;
     private final int armSpeed2 = -1;
 
-    public AutoPeriod(DriveTrain driveTrain, Hatch hatch, Elevator elevator, Drawer drawer, Arm arm) {
+    public AutoBottom(Elevator elevator, Drawer drawer, Arm arm) {
 
-        this.driveTrain = driveTrain;
-        this.hatch = hatch;
         this.elevator = elevator;
         this.drawer = drawer;
         this.arm = arm;
@@ -40,19 +37,16 @@ public class AutoPeriod extends SequentialCommandGroup {
         addCommands(
               
             // move drawer out
-            //new TimedClaw(arm, armSpeed, clawTime),
-            //new DrawerTimed(drawer, drawerSpeed),
-            //new TimedHatchToggle(hatch, 0.5),
-            new MoveBackAuto(hatch, driveTrain, elevator, drawer, this.dist1, arm),
-            new MoveToDistance(driveTrain, dist2),
-            new AutoDrawerBalance(driveTrain, drawer)
+            new ElevatorTimedUp(elevator, 0.8f),
+            new TimedClaw(arm, armSpeed, clawTime),
+            new DrawerTimed(drawer, drawerSpeed),
+            new ElevatorTimedDown(elevator, 2.4f)
+            
 
         );
         // parallel command to raise elevator arm
         // sequential command to release cone
 
-        addRequirements(driveTrain);
-        addRequirements(hatch);
         addRequirements(arm);
         addRequirements(elevator);
         addRequirements(drawer);

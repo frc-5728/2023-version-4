@@ -18,7 +18,7 @@ public class AutoBalance extends PIDCommand {
   public AutoBalance(DriveTrain driveTrain) {
     super(
         // The controller that the command will use
-        new PIDController(0.01, 0, 0.03),
+        new PIDController(0.008, 0, 0.013),
         // This should return the measurement
         () -> driveTrain.gyro.getPitch(),
         // This should return the setpoint (can also be a constant)

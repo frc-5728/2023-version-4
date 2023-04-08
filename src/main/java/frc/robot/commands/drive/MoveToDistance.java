@@ -26,7 +26,7 @@ public class MoveToDistance extends PIDCommand {
   public MoveToDistance(DriveTrain driveTrain, double distance) {
     super(
         // The controller that the command will use
-        new PIDController(0.07, 0.01, 0.1),
+        new PIDController(0.14, 0.01, 0.1),
         // This should return the measurement
         () -> driveTrain.leftEncoder.getPosition(),
         // This should return the setpoint (can also be a constant)

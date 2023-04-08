@@ -19,8 +19,8 @@ public class MoveBackAuto extends ParallelCommandGroup {
     public final int elevatorPos = 1;
     public final Elevator elevator;
     private final Drawer drawer;
-    private final float clawTime = 2.4f;
-    private final int drawerSpeed = -1;
+    private final float clawTime = 2.8f;
+    private final double drawerSpeed = -0.5;
     private final Arm arm;
     private final int armSpeed = -1;
     
@@ -35,10 +35,10 @@ public class MoveBackAuto extends ParallelCommandGroup {
 
         addCommands(
                 
-            new TimedClaw(arm, armSpeed, clawTime),
-            new DrawerTimed(drawer, drawerSpeed),
-            new MoveToDistance(driveTrain, displacement),
-            new ElevatorTimedDown(elevator, 2.5f)
+            //new TimedClaw(arm, armSpeed, clawTime),
+            //new TimedDrawer(drawer, 5.0, drawerSpeed),
+            new MoveToDistance(driveTrain, displacement)
+            //new ElevatorTimedDown(elevator, 2.5f)
             // drawer
 
         );
